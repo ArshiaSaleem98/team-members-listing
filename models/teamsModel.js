@@ -14,7 +14,7 @@ const getAllExistingTeams = () => {
 };
 
 //Creating a new team
-const createATeam = (id, data) => {
+const createATeam = (data) => {
   return new Promise((resolve, reject) => {
     db.run('INSERT INTO Team (name) VALUES (?)', [data.name], function (error) {
       if (error) {
