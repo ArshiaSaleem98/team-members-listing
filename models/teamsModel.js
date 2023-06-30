@@ -1,13 +1,15 @@
-const db = require('../db/teams_members.db');
+const sqlite3 = require('sqlite3');
+
+const db = new sqlite3.Database('./db/teams_members.db');
 
 // Get all existing teams
 const getAllExistingTeams = () => {
   return new Promise((resolve, reject) => {
-    db.all('SELECT * FROM Team', (error) => {
+    db.all('SELECT * FROM Team', (error, rows) => {
       if (error) {
-        reject(err);
+        reject(error);
       } else {
-        resolve(error);
+        resolve(rows);
       }
     });
   });

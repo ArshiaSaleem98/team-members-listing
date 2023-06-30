@@ -53,7 +53,7 @@ const updateAMember = async (request, response) => {
 };
 
 // Deleting a member
-const deleteMember = async (request, response) => {
+const deleteAMember = async (request, response) => {
   try {
     const id = request.params.id;
     const deletedMemberId = await membersModel.deleteAMember(id);
@@ -72,5 +72,5 @@ module.exports = {
   getAMemberById,
   getAllMembers,
   updateAMember,
-  deleteMember,
+  deleteAMember,
 };

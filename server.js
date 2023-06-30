@@ -1,20 +1,17 @@
 const express = require('express');
-const sqlite3 = require('sqlite3');
-
 const app = express();
+const port = 3000;
 
-const db = new sqlite3.Database('./db/teams_members.db');
-app.get('/teams', (req, res) => {
-  db.all('SELECT * FROM Team', (err, rows) => {
-    if (err) {
-      res.status(500).send(err.message);
-    } else {
-      res.json(rows);
-    }
-  });
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-const port = 3000; 
+// Routes
+const teamRoutes = require('./routes/teamsRoutes');
+const memberRoutes = require('./routes/membersRoutes');
+
+app.use('/teams', teamRoutes);
+app.use('/members', memberRoutes);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

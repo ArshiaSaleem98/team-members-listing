@@ -1,18 +1,18 @@
-const db = require('../db/database');
+const sqlite3 = require('sqlite3');
 
-
+const db = new sqlite3.Database('./db/teams_members.db');
 // Get all members
 const getAllMembers = () => {
-    return new Promise((resolve, reject) => {
-      db.all('SELECT * FROM Member', (error, rows) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(rows);
-        }
-      });
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM Member', (error, rows) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(rows);
+      }
     });
-  };
+  });
+};
 
 // Creating a new member
 const createAMember = (data) => {
@@ -30,8 +30,6 @@ const createAMember = (data) => {
     );
   });
 };
-
-
 
 // Getting a member by id
 const getAMemberById = (id) => {
