@@ -34,7 +34,7 @@ const createAMember = (data) => {
 // Getting a member by id
 const getAMemberById = (id) => {
   return new Promise((resolve, reject) => {
-    db.get('SELECT * FROM Member WHERE id = ?', [memberId], (error, row) => {
+    db.get('SELECT * FROM Member WHERE id = ?', [id], (error, row) => {
       if (error) {
         reject(error);
       } else if (!row) {

@@ -30,13 +30,13 @@ const createATeam = (data) => {
 
 const getATeamById = (id) => {
   return new Promise((resolve, reject) => {
-    db.get('SELECT * FROM Team WHERE id = ?', [id], (error) => {
+    db.get('SELECT * FROM Team WHERE id = ?', [id], (error, row) => {
       if (error) {
         reject(error);
-      } else if (!error) {
-        resolve(null); //if there is no team with the give id
+      } else if (!row) {
+        resolve(null); // if there is no team with the given id
       } else {
-        resolve(error);
+        resolve(row);
       }
     });
   });

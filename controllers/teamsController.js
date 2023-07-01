@@ -24,7 +24,7 @@ const createATeam = async (request, response) => {
 // Getting a team by ID
 const getATeamById = async (request, response) => {
   try {
-    const id = request.params.id;
+    const id = Number(request.params.id);
     const team = await teamsModel.getATeamById(id);
     if (!team) {
       response.status(404).json({ error: 'Team is not found' });
@@ -53,7 +53,7 @@ const updateATeam = async (request, response) => {
 };
 
 // Deleting a team
-const deleteATeam = async (response, request) => {
+const deleteATeam = async (request, response) => {
   try {
     const id = request.params.id;
     const deletedTeamId = await teamsModel.deleteATeam(id);

@@ -11,7 +11,7 @@ const getAllMembers = async (request, response) => {
 };
 
 // Creating a new member
-const createAMember = async (response, request) => {
+const createAMember = async (request, response) => {
   try {
     const data = request.body;
     const memberId = await membersModel.createAMember(data);
@@ -25,7 +25,7 @@ const createAMember = async (response, request) => {
 const getAMemberById = async (request, response) => {
   try {
     const id = request.params.id;
-    const member = await membersModel.getMemberById(id);
+    const member = await membersModel.getAMemberById(id);
     if (!member) {
       response.status(404).json({ error: 'Member is not found' });
     } else {
