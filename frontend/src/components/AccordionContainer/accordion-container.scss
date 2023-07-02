@@ -1,0 +1,74 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.accordion {
+  width: 100%;
+
+  .accordion-item {
+    border: 1px solid $gray-300;
+    margin-bottom: 10px;
+
+    &--active {
+      border-color: $gray-400;
+    }
+
+    &__header {
+      background-color: $gray-200;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    &__content {
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &__left-container {
+      width: 50%;
+      padding: 10px;
+      border: 1px solid $gray-300;
+    }
+
+    &__right-container {
+      width: 50%;
+      padding: 10px;
+      border: 1px solid $gray-300;
+    }
+
+    .container-padding {
+      padding: 5px;
+      height: 300px; 
+      overflow-y: auto;
+    }
+
+    .team-details {
+      text-align: center;
+    }
+
+    .team-label {
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    .label-bold {
+      font-weight: bold;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .accordion-item__right-container {
+      width: 100%;
+    }
+    .accordion-item__right-container--mobile {
+      order: 1;
+    }
+    .accordion-item__left-container {
+      width: 100%;
+    }
+    .accordion-item__left-container--mobile {
+      order: 2;
+    }
+  }
+}

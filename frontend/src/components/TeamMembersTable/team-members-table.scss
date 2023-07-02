@@ -1,0 +1,43 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+.team-members-table-wrapper {
+  height: 213px;
+  overflow-y: scroll;
+}
+
+.team-members-table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.team-members-table th,
+.team-members-table td {
+  padding: 8px;
+  border: 1px solid $gray-300;
+}
+
+.team-members-table th {
+  font-weight: bold;
+  background-color: $gray-200;
+}
+
+.member-edit-button,
+.member-delete-button {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border-radius: 3px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.member-edit-button {
+  background-color: $blue;
+}
+
+.member-delete-button {
+  background-color: $red;
+}

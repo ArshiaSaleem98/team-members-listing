@@ -1,0 +1,56 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+.container-padding {
+  padding: 5px;
+  height: 300px;
+  overflow-y: auto;
+}
+
+.team-details {
+  text-align: center;
+}
+
+.team-label {
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.label-bold {
+  font-weight: bold;
+}
+
+.team-name {
+  margin-bottom: 5px;
+}
+
+.team-members-wrapper {
+  margin-top: 10px;
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+
+.team-members {
+  display: flex;
+  gap: 10px;
+}
+
+.team-member {
+  white-space: nowrap;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.edit-button,
+.delete-button,
+.add-member-button {
+  padding: 5px 10px;
+  background-color: $gray-200;
+  border: none;
+  cursor: pointer;
+}
