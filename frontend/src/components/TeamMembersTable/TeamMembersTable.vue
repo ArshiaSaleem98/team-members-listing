@@ -12,9 +12,29 @@
           v-for="(teamMember, teamMemberIndex) in displayedMembers"
           :key="teamMemberIndex"
         >
-          <td>{{ teamMember.name }}</td>
           <td>
-            <button class="member-edit-button">Edit</button>
+            <input
+              v-if="teamMember.editing"
+              v-model="teamMember.name"
+              type="text"
+            />
+            <span v-else>{{ teamMember.name }}</span>
+          </td>
+          <td>
+            <button
+              v-if="!teamMember.editing"
+              class="member-edit-button"
+              @click="editMemberMethod(teamMember)"
+            >
+              Edit
+            </button>
+            <button
+              v-else
+              class="member-save-button"
+              @click="saveMember(teamMember)"
+            >
+              Save
+            </button>
             <button
               class="member-delete-button"
               @click="deleteMember(teamMember.id, fetchTeamsAndMembers)"
@@ -29,7 +49,7 @@
 </template>
 
 <script>
-import { deleteMember } from '@/utils/accordionMethods.js';
+import { deleteMember, editMember } from '@/utils/accordionMethods.js';
 
 export default {
   props: {
@@ -45,6 +65,15 @@ export default {
   },
   methods: {
     deleteMember,
+    editMember,
+    editMemberMethod(member) {
+      member.editing = true;
+    },
+    saveMember(member) {
+      console.log(member);
+      editMember(member.id, member);
+      member.editing = false;
+    },
   },
 };
 </script>

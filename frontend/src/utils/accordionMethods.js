@@ -3,6 +3,7 @@ import GetAllTeamMembersService from '@/services/TeamServices/GetAllTeamMembersS
 import DeleteTeamService from '@/services/TeamServices/DeleteTeamService';
 import EditTeamService from '@/services/TeamServices/EditTeamService';
 import DeleteMemberService from '@/services/MemberServices/DeleteMemberService';
+import EditMemberService from '@/services/MemberServices/EditMemberService';
 
 export function formatMembers(teamMembers) {
   console.log('members', teamMembers);
@@ -91,5 +92,16 @@ export function deleteMember(memberId, fetchTeamsAndMembers) {
     })
     .catch((error) => {
       console.error('Error in deleting the team:', error);
+    });
+}
+
+export function editMember(memberId, editedData) {
+  console.log('edit', memberId);
+  EditMemberService.editMember(memberId, editedData)
+    .then((response) => {
+      console.log('Member edited successfully:', response);
+    })
+    .catch((error) => {
+      console.error('Error in editing the member:', error);
     });
 }
