@@ -23,7 +23,7 @@
         >
           <TeamDetailsContainer
             :item="item"
-            :fetchTeamsAndMembers="fetchTeamsAndMembers"
+            :fetch-teams-and-members="fetchTeamsAndMembers"
           ></TeamDetailsContainer>
         </div>
         <div

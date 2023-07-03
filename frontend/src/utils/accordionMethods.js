@@ -1,6 +1,7 @@
 import GetAllTeamsService from '@/services/TeamServices/GetAllTeamsService.js';
 import GetAllTeamMembersService from '@/services/TeamServices/GetAllTeamMembersService.js';
 import DeleteTeamService from '@/services/TeamServices/DeleteTeamService';
+import EditTeamService from '@/services/TeamServices/EditTeamService';
 
 export function formatMembers(teamMembers) {
   console.log('members', teamMembers);
@@ -64,5 +65,17 @@ export function deleteTeam(teamId) {
     })
     .catch((error) => {
       console.error('Error in deleting the team:', error);
+    });
+}
+
+export function editTeam(teamId, editedData, fetchTeamsAndMembers) {
+  console.log('editedTeam', teamId, editedData);
+  EditTeamService.editTeam(teamId, editedData)
+    .then((response) => {
+      console.log('Team successfully Edited:', response);
+      fetchTeamsAndMembers();
+    })
+    .catch((error) => {
+      console.error('Error in editing the team:', error);
     });
 }

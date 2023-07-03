@@ -3,7 +3,10 @@
     <h2 class="team-details">Team Details</h2>
     <div class="team-label">
       <span class="label-bold">Team Name:</span>
-      <div class="team-name">{{ item.teamName }}</div>
+      <div class="team-name-wrapper">
+        <div v-if="!editing" class="team-name">{{ editedTeamName }}</div>
+        <input v-else class="team-name-edit" v-model="editedTeamName" />
+      </div>
     </div>
     <div class="team-label">
       <span class="label-bold">Team Members:</span>
@@ -14,7 +17,10 @@
       </div>
     </div>
     <div class="button-group">
-      <button class="edit-button" @click="editTeam">Edit</button>
+      <button v-if="!editing" class="edit-button" @click="startEditing">
+        Edit
+      </button>
+      <button v-else class="save-button" @click="saveTeam">Save</button>
       <button class="delete-button" @click="deleteTeam(item.id)">Delete</button>
       <button class="add-member-button" @click="addMember">Add Member</button>
     </div>
@@ -22,7 +28,8 @@
 </template>
 
 <script>
-import { deleteTeam } from '@/utils/accordionMethods.js';
+import { deleteTeam, editTeam } from '@/utils/accordionMethods.js';
+
 export default {
   props: {
     item: {
@@ -34,17 +41,30 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      editing: false,
+      editedTeamName: this.item.teamName,
+    };
+  },
   methods: {
-    editTeam() {
-      // Handle the edit button click event
-      console.log('Edit button clicked');
-      // Perform the desired actions for editing the team
-    },
     deleteTeam,
+    editTeam,
+    startEditing() {
+      this.editing = true;
+      this.editedTeamName = this.item.teamName;
+    },
+    saveTeam() {
+      const editedTeam = {
+        id: this.item.id,
+        name: this.editedTeamName,
+      };
+      editTeam(this.item.id, editedTeam, this.fetchTeamsAndMembers);
+      this.editing = false;
+    },
+
     addMember() {
-      // Handle the add member button click event
       console.log('Add member button clicked');
-      // Perform the desired actions for adding a team member
     },
   },
 };
