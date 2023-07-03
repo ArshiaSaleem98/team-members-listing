@@ -42,6 +42,22 @@ const getATeamById = (id) => {
   });
 };
 
+//get all members of team by team Id
+
+const getMembersByTeamId = (id) => {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM Member WHERE teamId = ?', [id], (error, row) => {
+      if (error) {
+        reject(error);
+      } else if (!row) {
+        resolve(null); // if there is no member in that team
+      } else {
+        resolve(row);
+      }
+    });
+  });
+};
+
 // Updating a team
 const updateATeam = (id, data) => {
   return new Promise((resolve, reject) => {
@@ -81,5 +97,6 @@ module.exports = {
   getAllExistingTeams,
   getATeamById,
   updateATeam,
+  getMembersByTeamId,
   deleteATeam,
 };

@@ -36,6 +36,22 @@ const getATeamById = async (request, response) => {
   }
 };
 
+//Get all members of team
+
+const getMembersByTeamId = async (request, response) => {
+  try {
+    const id = Number(request.params.id);
+    const members = await teamsModel.getMembersByTeamId(id);
+    if (!members) {
+      response.status(404).json({ error: 'No Member was found' });
+    } else {
+      response.json(members);
+    }
+  } catch (error) {
+    response.status(500).json({ error: 'Problem in getting the members' });
+  }
+};
+
 // Updating a team
 const updateATeam = async (request, response) => {
   try {
@@ -73,4 +89,5 @@ module.exports = {
   getATeamById,
   updateATeam,
   deleteATeam,
+  getMembersByTeamId,
 };

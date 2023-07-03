@@ -11,6 +11,9 @@ router.get('/', teamsController.getAllTeams);
 // Getting a team by id
 router.get('/:id', teamsController.getATeamById);
 
+// Getting members of team by id
+router.get('/members/:id', teamsController.getMembersByTeamId);
+
 // Updating the team by id
 router.put('/:id', teamsController.updateATeam);
 
