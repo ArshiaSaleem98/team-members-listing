@@ -11,7 +11,7 @@ export default {
       .get(apiUrl + '/' + teamId + `?timestamp=${timestamp}`)
       .then((response) => response.data)
       .catch((error) => {
-        console.error('Error in getting the members:', error);
+        console.error('Error in getting the team members:', error);
         throw error;
       });
   },

@@ -14,19 +14,37 @@
       </div>
     </div>
     <div class="button-group">
-      <button class="edit-button">Edit</button>
-      <button class="delete-button">Delete</button>
-      <button class="add-member-button">Add Member</button>
+      <button class="edit-button" @click="editTeam">Edit</button>
+      <button class="delete-button" @click="deleteTeam(item.id)">Delete</button>
+      <button class="add-member-button" @click="addMember">Add Member</button>
     </div>
   </div>
 </template>
 
 <script>
+import { deleteTeam } from '@/utils/accordionMethods.js';
 export default {
   props: {
     item: {
       type: Object,
       required: true,
+    },
+    fetchTeamsAndMembers: {
+      type: Function,
+      required: true,
+    },
+  },
+  methods: {
+    editTeam() {
+      // Handle the edit button click event
+      console.log('Edit button clicked');
+      // Perform the desired actions for editing the team
+    },
+    deleteTeam,
+    addMember() {
+      // Handle the add member button click event
+      console.log('Add member button clicked');
+      // Perform the desired actions for adding a team member
     },
   },
 };

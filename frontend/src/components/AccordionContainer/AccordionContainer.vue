@@ -21,7 +21,10 @@
           class="accordion-item__left-container"
           :class="{ 'accordion-item__left-container--mobile': isMobile }"
         >
-          <TeamDetailsContainer :item="item"></TeamDetailsContainer>
+          <TeamDetailsContainer
+            :item="item"
+            :fetchTeamsAndMembers="fetchTeamsAndMembers"
+          ></TeamDetailsContainer>
         </div>
         <div
           class="accordion-item__right-container"
@@ -83,12 +86,7 @@ export default {
         }
       });
     },
-    editMember(index) {
-      console.log('Edit member:', index);
-    },
-    deleteMember(index) {
-      console.log('Delete member:', index);
-    },
+
     async fetchTeamsAndMembers() {
       try {
         const accordionItems = await fetchTeamsAndMembers();
