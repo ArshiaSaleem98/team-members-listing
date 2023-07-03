@@ -2,9 +2,6 @@
   <div class="container-padding">
     <h2 class="team-details">Team Details</h2>
     <div class="team-label">
-      <span class="label-bold">Team:</span>
-    </div>
-    <div class="team-label">
       <span class="label-bold">Team Name:</span>
       <div class="team-name">{{ item.teamName }}</div>
     </div>
