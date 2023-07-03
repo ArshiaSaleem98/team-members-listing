@@ -5,7 +5,7 @@
       <span class="label-bold">Team Name:</span>
       <div class="team-name-wrapper">
         <div v-if="!editing" class="team-name">{{ editedTeamName }}</div>
-        <input v-else class="team-name-edit" v-model="editedTeamName" />
+        <input v-else v-model="editedTeamName" class="team-name-edit" />
       </div>
     </div>
     <div class="team-label">

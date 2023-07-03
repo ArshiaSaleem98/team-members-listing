@@ -12,10 +12,15 @@
           v-for="(teamMember, teamMemberIndex) in displayedMembers"
           :key="teamMemberIndex"
         >
-          <td>{{ teamMember }}</td>
+          <td>{{ teamMember.name }}</td>
           <td>
             <button class="member-edit-button">Edit</button>
-            <button class="member-delete-button">Delete</button>
+            <button
+              class="member-delete-button"
+              @click="deleteMember(teamMember.id, fetchTeamsAndMembers)"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
@@ -24,12 +29,22 @@
 </template>
 
 <script>
+import { deleteMember } from '@/utils/accordionMethods.js';
+
 export default {
   props: {
     displayedMembers: {
       type: Array,
       required: true,
     },
+
+    fetchTeamsAndMembers: {
+      type: Function,
+      required: true,
+    },
+  },
+  methods: {
+    deleteMember,
   },
 };
 </script>

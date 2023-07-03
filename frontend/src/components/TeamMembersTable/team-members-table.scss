@@ -25,6 +25,7 @@
 }
 
 .member-edit-button,
+.member-save-button,
 .member-delete-button {
   padding: 6px 12px;
   margin-right: 5px;
@@ -36,6 +37,10 @@
 
 .member-edit-button {
   background-color: $blue;
+}
+
+.member-save-button {
+  background-color: $green;
 }
 
 .member-delete-button {

@@ -2,6 +2,7 @@ import GetAllTeamsService from '@/services/TeamServices/GetAllTeamsService.js';
 import GetAllTeamMembersService from '@/services/TeamServices/GetAllTeamMembersService.js';
 import DeleteTeamService from '@/services/TeamServices/DeleteTeamService';
 import EditTeamService from '@/services/TeamServices/EditTeamService';
+import DeleteMemberService from '@/services/MemberServices/DeleteMemberService';
 
 export function formatMembers(teamMembers) {
   console.log('members', teamMembers);
@@ -46,6 +47,7 @@ export async function fetchTeamsAndMembers() {
         title: team.name,
         open: false,
         teamName: team.name,
+        teamMembers: members,
         teamMembersArray: members.map((member) => member.name),
       };
     });
@@ -77,5 +79,17 @@ export function editTeam(teamId, editedData, fetchTeamsAndMembers) {
     })
     .catch((error) => {
       console.error('Error in editing the team:', error);
+    });
+}
+
+export function deleteMember(memberId, fetchTeamsAndMembers) {
+  console.log('delte', memberId);
+  DeleteMemberService.deleteMember(memberId)
+    .then((response) => {
+      console.log('Member deleted successfully:', response);
+      fetchTeamsAndMembers();
+    })
+    .catch((error) => {
+      console.error('Error in deleting the team:', error);
     });
 }

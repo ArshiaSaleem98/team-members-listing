@@ -34,6 +34,7 @@
             <h2 class="team-members-title">Team Members</h2>
             <team-members-table
               :displayed-members="displayedMembers(item)"
+              :fetch-teams-and-members="fetchTeamsAndMembers"
             ></team-members-table>
           </div>
         </div>
@@ -65,9 +66,9 @@ export default {
   computed: {
     displayedMembers() {
       return (item) => {
-        if (item.teamMembersArray) {
-          console.log('itemMember', item.teamMembersArray);
-          return item.teamMembersArray;
+        if (item.teamMembers) {
+          console.log('itemMember', item.teamMembers);
+          return item.teamMembers;
         }
         return [];
       };
