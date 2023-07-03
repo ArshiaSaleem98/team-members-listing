@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { formatAccordionTeamItem } from '@/utils/accordionMethods.js';
 import TeamMembersTable from '@/components/TeamMembersTable/TeamMembersTable.vue';
 import TeamDetailsContainer from '@/components/TeamDetailsContainer/TeamDetailsContainer.vue';
 
@@ -78,22 +79,7 @@ export default {
       };
     },
     accordionItemsWithArray() {
-      return this.accordionItems.map((item) => {
-        const membersArray = item.teamMembers
-          .split(',')
-          .map((member) => member.trim());
-        const lastMember = membersArray[membersArray.length - 1];
-        const formattedMembers =
-          membersArray.length > 1
-            ? membersArray.slice(0, -1).join(', ') + ' & ' + lastMember
-            : lastMember;
-        return {
-          ...item,
-          teamMembersArray: membersArray,
-          formattedMembers,
-          showMore: false,
-        };
-      });
+      return this.accordionItems.map(formatAccordionTeamItem);
     },
   },
   methods: {
