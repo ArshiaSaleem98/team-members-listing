@@ -5,12 +5,10 @@ export default {
   getMembersOfTeam(teamId) {
     const timestamp = new Date().getTime();
     let apiUrl;
-    apiUrl = `${TEAMS_BASE_API_URL}/members/`;
+    apiUrl = `${TEAMS_BASE_API_URL}/members`;
 
     return axios
-      .get(apiUrl + '/members' + `?timestamp=${timestamp}`, {
-        id: Number(teamId),
-      })
+      .get(apiUrl + '/' + teamId + `?timestamp=${timestamp}`)
       .then((response) => response.data)
       .catch((error) => {
         console.error('Error in getting the members:', error);

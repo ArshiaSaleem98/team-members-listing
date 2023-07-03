@@ -1,7 +1,7 @@
 <template>
   <div class="accordion">
     <div
-      v-for="(item, index) in accordionItemsWithArray"
+      v-for="(item, index) in accordionItems"
       :key="index"
       class="accordion-item"
       :class="{ 'accordion-item--active': item.open }"
@@ -40,7 +40,10 @@
 </template>
 
 <script>
-import { formatAccordionTeamItem } from '@/utils/accordionMethods.js';
+import {
+  formatAccordionTeamItem,
+  fetchTeamsAndMembers,
+} from '@/utils/accordionMethods.js';
 import TeamMembersTable from '@/components/TeamMembersTable/TeamMembersTable.vue';
 import TeamDetailsContainer from '@/components/TeamDetailsContainer/TeamDetailsContainer.vue';
 
@@ -51,36 +54,24 @@ export default {
   },
   data() {
     return {
-      accordionItems: [
-        {
-          title: 'Team A',
-          open: false,
-          teamName: 'Team A',
-          teamMembers:
-            'Member 1, Member 2, Member 3, Member 4, Member 5, Member 6, Member 7, Member 8',
-        },
-        {
-          title: 'Team B',
-          open: false,
-          teamName: 'Team B',
-          teamMembers:
-            'Member 9, Member 10, Member 11, Member 12, Member 13, Member 14, Member 15, Member 16',
-        },
-      ],
+      teams: [],
+      accordionItems: [],
     };
   },
+
   computed: {
     displayedMembers() {
       return (item) => {
         if (item.teamMembersArray) {
+          console.log('itemMember', item.teamMembersArray);
           return item.teamMembersArray;
         }
         return [];
       };
     },
-    accordionItemsWithArray() {
-      return this.accordionItems.map(formatAccordionTeamItem);
-    },
+  },
+  mounted() {
+    this.fetchTeamsAndMembers();
   },
   methods: {
     toggleItem(index) {
@@ -97,6 +88,14 @@ export default {
     },
     deleteMember(index) {
       console.log('Delete member:', index);
+    },
+    async fetchTeamsAndMembers() {
+      try {
+        const accordionItems = await fetchTeamsAndMembers();
+        this.accordionItems = accordionItems.map(formatAccordionTeamItem);
+      } catch (error) {
+        console.error('Error fetching teams and members:', error);
+      }
     },
   },
 };
