@@ -1,0 +1,24 @@
+.form-buttons {
+  margin-top: 10px;
+  display: flex;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+input[type='text'] {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+button {
+  flex: 1;
+  margin-right: 5px;
+}
+
+button:last-child {
+  margin-right: 0;
+}

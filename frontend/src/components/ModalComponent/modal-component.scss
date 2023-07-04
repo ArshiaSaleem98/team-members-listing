@@ -1,0 +1,30 @@
+.modal-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  background-color: white;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.modal-content-wrapper {
+  flex: 1;
+  display: flex;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.close-modal-button {
+  margin-top: 10px;
+  align-self: flex-end;
+}
