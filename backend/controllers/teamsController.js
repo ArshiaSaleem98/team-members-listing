@@ -1,4 +1,5 @@
 const teamsModel = require('../models/teamsModel');
+const membersModel = require('../models/membersModel');
 
 // Getting all the teams
 const getAllTeams = async (request, response) => {
@@ -72,6 +73,15 @@ const updateATeam = async (request, response) => {
 const deleteATeam = async (request, response) => {
   try {
     const id = request.params.id;
+    const team = await teamsModel.getATeamById(id);
+    if (!team) {
+      response.status(404).json({ error: 'Team is not found' });
+      return;
+    }
+
+    // Delete all members that belongs to the this team
+    await membersModel.deleteMembersByTeamId(id);
+
     const deletedTeamId = await teamsModel.deleteATeam(id);
     if (!deletedTeamId) {
       response.status(404).json({ error: 'Team is not found' });
@@ -79,7 +89,7 @@ const deleteATeam = async (request, response) => {
       response.json({ id: deletedTeamId });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Problem in deleting the team' });
+    response.status(500).json({ error: 'Problem in deleting the team' });
   }
 };
 

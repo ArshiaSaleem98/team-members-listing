@@ -2,7 +2,12 @@
   <div v-show="showModal" class="modal-container">
     <div class="modal-content">
       <h2>{{ title }}</h2>
-      <FormComponent :label="label" @save="saveForm" @cancel="cancelForm" />
+      <FormComponent
+        :label="label"
+        @save="saveForm"
+        @cancel="cancelForm"
+        @teamAdded="handleTeamAdded"
+      />
     </div>
   </div>
 </template>
@@ -12,6 +17,9 @@ import FormComponent from '@/components/FormComponent/FormComponent.vue';
 
 export default {
   name: 'ModalComponent',
+  components: {
+    FormComponent,
+  },
   props: {
     showModal: {
       type: Boolean,
@@ -26,9 +34,6 @@ export default {
       required: true,
     },
   },
-  components: {
-    FormComponent,
-  },
   methods: {
     toggleModal() {
       this.$emit('close-modal');
@@ -38,6 +43,9 @@ export default {
     },
     cancelForm() {
       this.toggleModal();
+    },
+    handleTeamAdded(teamData) {
+      this.$emit('teamAdded', teamData);
     },
   },
 };

@@ -7,11 +7,12 @@
       <button class="open-modal-button" @click="toggleModal">Open Modal</button>
     </div>
     <div class="home-page__content">
-      <AccordionContainer />
+      <AccordionContainer ref="accordionContainer" />
     </div>
     <ModalComponent
       label="Team Name"
       title="Team"
+      @teamAdded="handleTeamAdded"
       :show-modal="showModal"
       @close-modal="toggleModal"
     />
@@ -37,6 +38,10 @@ export default {
   methods: {
     toggleModal() {
       this.showModal = !this.showModal;
+    },
+    handleTeamAdded(teamData) {
+      console.log('holaHome', teamData);
+      this.$refs.accordionContainer.fetchTeamsAndMembers();
     },
   },
 };

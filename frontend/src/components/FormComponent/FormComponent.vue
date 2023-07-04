@@ -1,7 +1,7 @@
 <template>
   <div>
     <label>{{ label }}</label>
-    <input type="text" v-model="formData" />
+    <input v-model="formData" type="text" />
     <div class="form-buttons">
       <button @click="save">Save</button>
       <button @click="cancel">Cancel</button>
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import AddTeamService from '@/services/TeamServices/AddTeamService.js';
+
 export default {
   name: 'FormComponent',
   props: {
@@ -25,8 +27,14 @@ export default {
   },
   methods: {
     save() {
-      console.log('label', this.label);
-      this.$emit('save', this.formData);
+      AddTeamService.addTeam({ name: this.formData })
+        .then((response) => {
+          console.log('Team added successfully:', response);
+          this.$emit('teamAdded', response.data);
+        })
+        .catch((error) => {
+          console.error('Error adding the team:', error);
+        });
     },
     cancel() {
       this.$emit('cancel');

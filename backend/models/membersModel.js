@@ -80,7 +80,21 @@ const deleteAMember = (id) => {
   });
 };
 
+//deleting members by teamId
+const deleteMembersByTeamId = (teamId) => {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM Member WHERE teamId = ?', [teamId], function (error) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
+};
+
 module.exports = {
+  deleteMembersByTeamId,
   createAMember,
   getAllMembers,
   getAMemberById,

@@ -36,20 +36,25 @@ export async function fetchTeamsAndMembers() {
   try {
     const teams = await GetAllTeamsService.getTeams();
     console.log('teams', teams);
+
     const membersOfTeams = await Promise.all(
       teams.map((team) => GetAllTeamMembersService.getMembersOfTeam(team.id)),
     );
 
     const accordionItems = membersOfTeams.map((members, index) => {
       console.log('index', index);
-      const team = teams.find((team) => team.id === members[0].teamId);
+      const teamId = members.length > 0 ? members[0].teamId : teams[index]?.id;
+      const team = teams.find((team) => team.id === teamId);
+      const teamMembers = members || [];
+      const teamName = team && team.name ? team.name : '';
+
       return {
-        id: team.id,
-        title: team.name,
+        id: teamId,
+        title: teamName,
         open: false,
-        teamName: team.name,
-        teamMembers: members,
-        teamMembersArray: members.map((member) => member.name),
+        teamName: teamName,
+        teamMembers: teamMembers,
+        teamMembersArray: teamMembers.map((member) => member.name),
       };
     });
 
