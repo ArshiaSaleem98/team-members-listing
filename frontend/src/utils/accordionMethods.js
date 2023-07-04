@@ -82,6 +82,7 @@ export async function fetchTeamsAndMembers() {
 
 export async function addTeam(component, data) {
   try {
+    console.log('holadata', data);
     const response = await AddTeamService.addTeam(data);
     console.log('Team added successfully:', response);
     component.$emit('teamAdded', response.data);

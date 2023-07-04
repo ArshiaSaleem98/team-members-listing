@@ -4,8 +4,7 @@
     <div class="team-label">
       <span class="label-bold">Team Name:</span>
       <div class="team-name-wrapper">
-        <div v-if="!editing" class="team-name">{{ editedTeamName }}</div>
-        <input v-else v-model="editedTeamName" class="team-name-edit" />
+        <div class="team-name">{{ title }}</div>
       </div>
     </div>
     <div class="team-label">
@@ -16,48 +15,19 @@
         </div>
       </div>
     </div>
-    <div class="button-group">
-      <button v-if="!editing" class="edit-button" @click="startEditing">
-        Edit
-      </button>
-      <button v-else class="save-button" @click="saveTeam">Save</button>
-    </div>
   </div>
 </template>
 
 <script>
-import { editTeam } from '@/utils/accordionMethods.js';
-
 export default {
   props: {
     item: {
       type: Object,
       required: true,
     },
-    fetchTeamsAndMembers: {
-      type: Function,
+    title: {
+      type: String,
       required: true,
-    },
-  },
-  data() {
-    return {
-      editing: false,
-      editedTeamName: this.item.teamName,
-    };
-  },
-  methods: {
-    editTeam,
-    startEditing() {
-      this.editing = true;
-      this.editedTeamName = this.item.teamName;
-    },
-    saveTeam() {
-      const editedTeam = {
-        id: this.item.id,
-        name: this.editedTeamName,
-      };
-      editTeam(this.item.id, editedTeam, this.fetchTeamsAndMembers);
-      this.editing = false;
     },
   },
 };

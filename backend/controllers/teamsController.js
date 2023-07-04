@@ -58,6 +58,7 @@ const updateATeam = async (request, response) => {
   try {
     const id = request.params.id;
     const updatedData = request.body;
+    console.log('request', request);
     const updatedTeamId = await teamsModel.updateATeam(id, updatedData);
     if (!updatedTeamId) {
       response.status(404).json({ error: 'Team is not found' });

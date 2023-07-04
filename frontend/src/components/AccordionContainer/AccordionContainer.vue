@@ -7,11 +7,30 @@
         class="accordion-item"
         :class="{ 'accordion-item--active': item.open }"
       >
-        <div class="accordion-item__header" @click="toggleItem(index)">
+        <div class="accordion-item__header">
           <div class="accordion-item__title">
-            {{ item.title }}
+            <input
+              v-if="item.editing"
+              v-model="item.editedTitle"
+              class="team-name-edit"
+            />
+            <div v-else class="team-name">{{ item.title }}</div>
           </div>
           <div class="accordion-item__buttons">
+            <button
+              v-if="!item.editing"
+              class="edit-button"
+              @click="startEditing(index)"
+            >
+              Edit
+            </button>
+            <button
+              v-else
+              class="save-button"
+              @click="saveTeam(item.id, item.editedTitle, index)"
+            >
+              Save
+            </button>
             <button
               class="delete-button"
               @click="deleteTeamMethod(item.id, index)"
@@ -19,7 +38,11 @@
               Delete
             </button>
           </div>
-          <span class="accordion-icon" :class="{ open: item.open }">
+          <span
+            class="accordion-icon"
+            :class="{ open: item.open }"
+            @click="toggleItem(index)"
+          >
             &#x25BE;
           </span>
         </div>
@@ -30,8 +53,8 @@
               :class="{ 'accordion-item__left-container--mobile': isMobile }"
             >
               <TeamDetailsContainer
+                :title="item.title"
                 :item="item"
-                :fetch-teams-and-members="fetchTeamsAndMembers"
               ></TeamDetailsContainer>
             </div>
             <div
@@ -54,7 +77,11 @@
 </template>
 
 <script>
-import { fetchTeamsAndMembers, deleteTeam } from '@/utils/accordionMethods.js';
+import {
+  fetchTeamsAndMembers,
+  deleteTeam,
+  editTeam,
+} from '@/utils/accordionMethods.js';
 import TeamMembersTable from '@/components/TeamMembersTable/TeamMembersTable.vue';
 import TeamDetailsContainer from '@/components/TeamDetailsContainer/TeamDetailsContainer.vue';
 
@@ -94,6 +121,7 @@ export default {
     },
 
     toggleItem(index) {
+      // This method will be triggered only when clicking on the accordion icon
       this.accordionItems.forEach((item, i) => {
         if (i === index) {
           item.open = !item.open;
@@ -101,6 +129,17 @@ export default {
           item.open = false;
         }
       });
+    },
+
+    startEditing(index) {
+      this.accordionItems[index].editing = true;
+    },
+
+    saveTeam(id, editedTitle, index) {
+      this.accordionItems[index].title = editedTitle;
+      this.accordionItems[index].name = editedTitle;
+      this.accordionItems[index].editing = false;
+      editTeam(id, this.accordionItems[index], this.fetchTeamsAndMembers);
     },
 
     async fetchTeamsAndMembers() {
