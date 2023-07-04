@@ -3,17 +3,23 @@
     <div class="home-page__header">
       <h1>{{ pageTitle }}</h1>
     </div>
-    <div class="open-modal-button-container">
-      <button class="open-modal-button" @click="toggleModal">Open Modal</button>
+    <div class="add-team-member-modal-button-container">
+      <button class="add-team-button" @click="toggleModal('team')">
+        Add Team
+      </button>
+      <button class="add-member-button" @click="toggleModal('member')">
+        Add Member
+      </button>
     </div>
     <div class="home-page__content">
       <AccordionContainer ref="accordionContainer" />
     </div>
     <ModalComponent
-      label="Team Name"
-      title="Team"
-      @teamAdded="handleTeamAdded"
+      :label="modalLabel"
+      :title="modalTitle"
       :show-modal="showModal"
+      @teamAdded="handleTeamAdded"
+      @memberAdded="handleMemberAdded"
       @close-modal="toggleModal"
     />
   </div>
@@ -33,14 +39,28 @@ export default {
     return {
       pageTitle: 'Team Member Listing Page',
       showModal: false,
+      modalType: '',
     };
   },
+  computed: {
+    modalLabel() {
+      return this.modalType === 'team' ? 'Team Name' : 'Member Name';
+    },
+    modalTitle() {
+      return this.modalType === 'team' ? 'Team' : 'Member';
+    },
+  },
   methods: {
-    toggleModal() {
+    toggleModal(type) {
+      this.modalType = type;
       this.showModal = !this.showModal;
     },
     handleTeamAdded(teamData) {
-      console.log('holaHome', teamData);
+      console.log('Team added:', teamData);
+      this.$refs.accordionContainer.fetchTeamsAndMembers();
+    },
+    handleMemberAdded(memberData) {
+      console.log('Member added:', memberData);
       this.$refs.accordionContainer.fetchTeamsAndMembers();
     },
   },

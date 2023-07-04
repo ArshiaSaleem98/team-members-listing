@@ -4,9 +4,9 @@
       <h2>{{ title }}</h2>
       <FormComponent
         :label="label"
-        @save="saveForm"
         @cancel="cancelForm"
         @teamAdded="handleTeamAdded"
+        @memberAdded="handleMemberAdded"
       />
     </div>
   </div>
@@ -38,14 +38,15 @@ export default {
     toggleModal() {
       this.$emit('close-modal');
     },
-    saveForm(formData) {
-      console.log('Form data:', formData);
-    },
     cancelForm() {
       this.toggleModal();
     },
     handleTeamAdded(teamData) {
       this.$emit('teamAdded', teamData);
+    },
+    handleMemberAdded(memberData) {
+      this.$emit('memberAdded', memberData);
+      this.cancelForm();
     },
   },
 };

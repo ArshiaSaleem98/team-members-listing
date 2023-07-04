@@ -11,7 +11,7 @@ export default {
         name: member.name,
         teamId: member.teamId,
       })
-      .then((response) => console.log('response', member, response))
+      .then((response) => response)
       .catch((error) => {
         console.error('Error adding the member:', error);
         throw error;

@@ -4,6 +4,8 @@ import DeleteTeamService from '@/services/TeamServices/DeleteTeamService';
 import EditTeamService from '@/services/TeamServices/EditTeamService';
 import DeleteMemberService from '@/services/MemberServices/DeleteMemberService';
 import EditMemberService from '@/services/MemberServices/EditMemberService';
+import AddTeamService from '@/services/TeamServices/AddTeamService';
+import AddMemberService from '@/services/MemberServices/AddMemberService';
 
 export function formatMembers(teamMembers) {
   console.log('members', teamMembers);
@@ -30,6 +32,19 @@ export function formatAccordionTeamItem(teamItem) {
     formattedMembers,
     showMore,
   };
+}
+
+export async function getTeams() {
+  try {
+    const teams = await GetAllTeamsService.getTeams();
+    return teams.map((team) => ({
+      id: team.id,
+      name: team.name,
+    }));
+  } catch (error) {
+    console.error('Error fetching teams:', error);
+    return [];
+  }
 }
 
 export async function fetchTeamsAndMembers() {
@@ -65,6 +80,17 @@ export async function fetchTeamsAndMembers() {
   }
 }
 
+export async function addTeam(data) {
+  try {
+    const response = await AddTeamService.addTeam(data);
+    console.log('Team added successfully:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding the team:', error);
+    throw error;
+  }
+}
+
 export function deleteTeam(teamId) {
   DeleteTeamService.deleteTeam(teamId)
     .then((response) => {
@@ -86,6 +112,17 @@ export function editTeam(teamId, editedData, fetchTeamsAndMembers) {
     .catch((error) => {
       console.error('Error in editing the team:', error);
     });
+}
+
+export async function addMember(data) {
+  try {
+    const response = await AddMemberService.addMember(data);
+    console.log('Member added successfully:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding the Member:', error);
+    throw error;
+  }
 }
 
 export function deleteMember(memberId, fetchTeamsAndMembers) {
