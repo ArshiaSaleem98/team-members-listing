@@ -21,14 +21,12 @@
         Edit
       </button>
       <button v-else class="save-button" @click="saveTeam">Save</button>
-      <button class="delete-button" @click="deleteTeam(item.id)">Delete</button>
-      <button class="add-member-button" @click="addMember">Add Member</button>
     </div>
   </div>
 </template>
 
 <script>
-import { deleteTeam, editTeam } from '@/utils/accordionMethods.js';
+import { editTeam } from '@/utils/accordionMethods.js';
 
 export default {
   props: {
@@ -48,7 +46,6 @@ export default {
     };
   },
   methods: {
-    deleteTeam,
     editTeam,
     startEditing() {
       this.editing = true;
@@ -61,10 +58,6 @@ export default {
       };
       editTeam(this.item.id, editedTeam, this.fetchTeamsAndMembers);
       this.editing = false;
-    },
-
-    addMember() {
-      console.log('Add member button clicked');
     },
   },
 };

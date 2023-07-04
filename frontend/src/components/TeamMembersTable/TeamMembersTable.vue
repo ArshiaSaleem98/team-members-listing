@@ -9,7 +9,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(teamMember, teamMemberIndex) in displayedMembers"
+          v-for="(teamMember, teamMemberIndex) in localMembers"
           :key="teamMemberIndex"
         >
           <td>
@@ -37,7 +37,7 @@
             </button>
             <button
               class="member-delete-button"
-              @click="deleteMember(teamMember.id, fetchTeamsAndMembers)"
+              @click="deleteMemberMethod(teamMember.id)"
             >
               Delete
             </button>
@@ -57,15 +57,32 @@ export default {
       type: Array,
       required: true,
     },
-
     fetchTeamsAndMembers: {
       type: Function,
       required: true,
     },
   },
+  data() {
+    return {
+      localMembers: [],
+    };
+  },
+  created() {
+    this.localMembers = [...this.displayedMembers];
+  },
   methods: {
     deleteMember,
     editMember,
+
+    deleteMemberMethod(memberId) {
+      const index = this.localMembers.findIndex(
+        (member) => member.id === memberId,
+      );
+      if (index !== -1) {
+        this.localMembers.splice(index, 1);
+      }
+      deleteMember(memberId);
+    },
     editMemberMethod(member) {
       member.editing = true;
     },

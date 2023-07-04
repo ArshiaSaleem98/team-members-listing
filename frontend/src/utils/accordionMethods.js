@@ -34,16 +34,16 @@ export function formatAccordionTeamItem(teamItem) {
   };
 }
 
-export async function getTeams() {
+export async function getTeams(component) {
   try {
     const teams = await GetAllTeamsService.getTeams();
-    return teams.map((team) => ({
+    console.log('Teams fetched successfully:', teams);
+    component.teams = teams.map((team) => ({
       id: team.id,
       name: team.name,
     }));
   } catch (error) {
     console.error('Error fetching teams:', error);
-    return [];
   }
 }
 
@@ -73,18 +73,21 @@ export async function fetchTeamsAndMembers() {
       };
     });
 
-    return accordionItems;
+    return accordionItems.map(formatAccordionTeamItem);
   } catch (error) {
     console.error('Error fetching teams and members:', error);
     return [];
   }
 }
 
-export async function addTeam(data) {
+export async function addTeam(component, data) {
   try {
     const response = await AddTeamService.addTeam(data);
     console.log('Team added successfully:', response);
-    return response.data;
+    component.$emit('teamAdded', response.data);
+    component.clearForm();
+    component.$emit('cancel');
+    getTeams(component);
   } catch (error) {
     console.error('Error adding the team:', error);
     throw error;
@@ -93,10 +96,7 @@ export async function addTeam(data) {
 
 export function deleteTeam(teamId) {
   DeleteTeamService.deleteTeam(teamId)
-    .then((response) => {
-      console.log('Team deleted successfully:', response);
-      this.fetchTeamsAndMembers();
-    })
+    .then((response) => response)
     .catch((error) => {
       console.error('Error in deleting the team:', error);
     });
@@ -114,23 +114,23 @@ export function editTeam(teamId, editedData, fetchTeamsAndMembers) {
     });
 }
 
-export async function addMember(data) {
+export async function addMember(component, data) {
   try {
     const response = await AddMemberService.addMember(data);
     console.log('Member added successfully:', response);
-    return response.data;
+    component.$emit('memberAdded', response.data);
+    component.clearForm();
   } catch (error) {
     console.error('Error adding the Member:', error);
     throw error;
   }
 }
 
-export function deleteMember(memberId, fetchTeamsAndMembers) {
+export function deleteMember(memberId) {
   console.log('delte', memberId);
   DeleteMemberService.deleteMember(memberId)
     .then((response) => {
       console.log('Member deleted successfully:', response);
-      fetchTeamsAndMembers();
     })
     .catch((error) => {
       console.error('Error in deleting the team:', error);

@@ -17,6 +17,9 @@
       background-color: $gray-200;
       padding: 10px;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     &__content {
@@ -39,7 +42,7 @@
 
     .container-padding {
       padding: 5px;
-      height: 300px; 
+      height: 300px;
       overflow-y: auto;
     }
 
@@ -55,8 +58,45 @@
     .label-bold {
       font-weight: bold;
     }
+
+    .accordion-item__title {
+      text-align: left;
+    }
+
+    .accordion-item__buttons {
+      display: flex;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .delete-button {
+      padding: 5px 10px;
+      background-color: $primary;
+      color: $white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .delete-button:hover {
+      background-color: $primary;
+    }
+  }
+  .accordion-item-enter-active,
+  .accordion-item-leave-active {
+    transition: opacity 0.3s ease;
   }
 
+  .accordion-item-enter,
+  .accordion-item-leave-to {
+    opacity: 0;
+  }
+
+  .accordion-content-enter,
+  .accordion-content-leave-to {
+    max-height: 0;
+    overflow: hidden;
+  }
   @media (max-width: 768px) {
     .accordion-item__right-container {
       width: 100%;

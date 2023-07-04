@@ -39,50 +39,30 @@ export default {
     };
   },
   mounted() {
-    if (this.label === 'Member Name') {
-      this.fetchTeams();
-    }
+    getTeams(this);
   },
+  getTeams,
   methods: {
+    clearForm() {
+      this.formData = '';
+      this.selectedTeam = '';
+    },
     save() {
       const data = {
         name: this.formData,
       };
       if (this.label === 'Team Name') {
-        addTeam(data)
-          .then((responseData) => {
-            this.$emit('teamAdded', responseData);
-          })
-          .catch((error) => {
-            console.log('error', error);
-          });
+        addTeam(this, data);
       } else if (this.label === 'Member Name') {
-        const member = {
+        const addNewMember = {
           name: this.formData,
           teamId: this.selectedTeam,
         };
-        addMember(member)
-          .then((responseData) => {
-            this.$emit('memberAdded', responseData);
-          })
-          .catch((error) => {
-            console.log('error', error);
-          });
-
-        console.log('hola member', this.selectedTeam);
+        addMember(this, addNewMember);
       }
     },
     cancel() {
       this.$emit('cancel');
-    },
-    async fetchTeams() {
-      try {
-        const allTeams = await getTeams();
-        console.log('hola', allTeams);
-        this.teams = allTeams;
-      } catch (error) {
-        console.error('Error fetching teams:', error);
-      }
     },
   },
 };
