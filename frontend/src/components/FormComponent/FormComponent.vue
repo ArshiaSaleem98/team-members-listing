@@ -6,8 +6,8 @@
       v-model="selectedTeam"
       class="full-width-select"
     >
-      <option v-for="team in teams" :key="team.id" :value="team.id">
-        {{ team.name }}
+      <option v-for="team in teamsArray" :key="team.id" :value="team.id">
+        {{ team.teamName }}
       </option>
     </select>
     <label>{{ label }}</label>
@@ -21,13 +21,17 @@
 </template>
 
 <script>
-import { addTeam, getTeams, addMember } from '@/utils/accordionMethods.js';
+import { addTeam, addMember } from '@/utils/accordionMethods.js';
 
 export default {
   name: 'FormComponent',
   props: {
     label: {
       type: String,
+      required: true,
+    },
+    teamsArray: {
+      type: Array,
       required: true,
     },
   },
@@ -38,10 +42,6 @@ export default {
       teams: [],
     };
   },
-  mounted() {
-    getTeams(this);
-  },
-  getTeams,
   methods: {
     clearForm() {
       this.formData = '';

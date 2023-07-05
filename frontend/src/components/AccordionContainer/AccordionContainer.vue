@@ -116,12 +116,12 @@ export default {
       const position = this.accordionItems.findIndex((item) => item.id === id);
       if (index !== -1) {
         this.accordionItems.splice(position, 1);
+        this.$emit('update-teams-array', this.accordionItems);
       }
       deleteTeam(id);
     },
 
     toggleItem(index) {
-      // This method will be triggered only when clicking on the accordion icon
       this.accordionItems.forEach((item, i) => {
         if (i === index) {
           item.open = !item.open;
@@ -140,12 +140,14 @@ export default {
       this.accordionItems[index].name = editedTitle;
       this.accordionItems[index].editing = false;
       editTeam(id, this.accordionItems[index], this.fetchTeamsAndMembers);
+      this.$emit('update-teams-array', this.accordionItems);
     },
 
     async fetchTeamsAndMembers() {
       try {
         const accordionItems = await fetchTeamsAndMembers();
         this.accordionItems = accordionItems;
+        this.$emit('update-teams-array', this.accordionItems);
       } catch (error) {
         console.error('Error fetching teams and members:', error);
       }

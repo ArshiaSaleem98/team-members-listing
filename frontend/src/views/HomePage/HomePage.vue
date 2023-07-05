@@ -12,12 +12,16 @@
       </button>
     </div>
     <div class="home-page__content">
-      <AccordionContainer ref="accordionContainer" />
+      <AccordionContainer
+        ref="accordionContainer"
+        @update-teams-array="handleTeamsArray"
+      />
     </div>
     <ModalComponent
       :label="modalLabel"
       :title="modalTitle"
       :show-modal="showModal"
+      :teams-array="teamsArray"
       @teamAdded="handleTeamAdded"
       @memberAdded="handleMemberAdded"
       @close-modal="toggleModal"
@@ -40,6 +44,7 @@ export default {
       pageTitle: 'Team Member Listing Page',
       showModal: false,
       modalType: '',
+      teamsArray: [],
     };
   },
   computed: {
@@ -62,6 +67,9 @@ export default {
     handleMemberAdded(memberData) {
       console.log('Member added:', memberData);
       this.$refs.accordionContainer.fetchTeamsAndMembers();
+    },
+    handleTeamsArray(array) {
+      this.teamsArray = array;
     },
   },
 };

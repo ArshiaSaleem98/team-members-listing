@@ -34,19 +34,6 @@ export function formatAccordionTeamItem(teamItem) {
   };
 }
 
-export async function getTeams(component) {
-  try {
-    const teams = await GetAllTeamsService.getTeams();
-    console.log('Teams fetched successfully:', teams);
-    component.teams = teams.map((team) => ({
-      id: team.id,
-      name: team.name,
-    }));
-  } catch (error) {
-    console.error('Error fetching teams:', error);
-  }
-}
-
 export async function fetchTeamsAndMembers() {
   try {
     const teams = await GetAllTeamsService.getTeams();
@@ -82,13 +69,11 @@ export async function fetchTeamsAndMembers() {
 
 export async function addTeam(component, data) {
   try {
-    console.log('holadata', data);
     const response = await AddTeamService.addTeam(data);
     console.log('Team added successfully:', response);
     component.$emit('teamAdded', response.data);
     component.clearForm();
     component.$emit('cancel');
-    getTeams(component);
   } catch (error) {
     console.error('Error adding the team:', error);
     throw error;

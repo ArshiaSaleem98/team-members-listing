@@ -7,6 +7,7 @@
         @cancel="cancelForm"
         @teamAdded="handleTeamAdded"
         @memberAdded="handleMemberAdded"
+        :teams-array="teamsArray"
       />
     </div>
   </div>
@@ -21,6 +22,10 @@ export default {
     FormComponent,
   },
   props: {
+    teamsArray: {
+      type: Array,
+      required: true,
+    },
     showModal: {
       type: Boolean,
       required: true,
