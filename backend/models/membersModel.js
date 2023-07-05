@@ -103,14 +103,15 @@ const deleteMembersByTeamId = (teamId) => {
   return new Promise((resolve, reject) => {
     if (!teamId) {
       reject('Team ID is required.');
-      db.run('DELETE FROM Member WHERE teamId = ?', [teamId], function (error) {
-        if (error) {
-          reject(error);
-        } else {
-          resolve();
-        }
-      });
+      return;
     }
+    db.run('DELETE FROM Member WHERE teamId = ?', [teamId], function (error) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
   });
 };
 

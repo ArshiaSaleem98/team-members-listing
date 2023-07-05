@@ -14,6 +14,7 @@ const getAllTeams = async (request, response) => {
 // Creating a new team
 const createATeam = async (request, response) => {
   try {
+    console.log('request', request.body);
     const data = request.body;
     const id = await teamsModel.createATeam(data);
     response.json({ id: id });
@@ -80,15 +81,17 @@ const deleteATeam = async (request, response) => {
       return;
     }
 
-    // Delete all members that belongs to the this team
-    await membersModel.deleteMembersByTeamId(id);
-
+    // Delete the team
     const deletedTeamId = await teamsModel.deleteATeam(id);
+
     if (!deletedTeamId) {
       response.status(404).json({ error: 'Team is not found' });
-    } else {
-      response.json({ id: deletedTeamId });
+      return;
     }
+
+    await membersModel.deleteMembersByTeamId(id);
+
+    response.json({ id: deletedTeamId });
   } catch (error) {
     response.status(500).json({ error: 'Problem in deleting the team' });
   }
