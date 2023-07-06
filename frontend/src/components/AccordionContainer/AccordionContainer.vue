@@ -64,9 +64,9 @@
               <div class="container-padding">
                 <h2 class="team-members-title">Team Members</h2>
                 <team-members-table
-                  @delete-member="deleteMemberMethod"
                   :displayed-members="displayedMembers(item)"
                   :fetch-teams-and-members="fetchTeamsAndMembers"
+                  @delete-member="deleteMemberMethod"
                 ></team-members-table>
               </div>
             </div>

@@ -37,21 +37,31 @@
             </button>
             <button
               class="member-delete-button"
-              @click="deleteMemberMethod(teamMember.id)"
+              @click="showDeleteConfirmation(teamMember.id)"
             >
               Delete
             </button>
           </td>
         </tr>
       </tbody>
+      <DeleteModalComponent
+        v-if="showDeleteModal"
+        :item-id="memberToDeleteId"
+        @delete-team="deleteMemberMethod"
+        @cancel-delete="cancelDelete"
+      ></DeleteModalComponent>
     </table>
   </div>
 </template>
 
 <script>
 import { deleteMember, editMember } from '@/utils/accordionMethods.js';
+import DeleteModalComponent from '@/components/DeleteModalComponent/DeleteModalComponent.vue';
 
 export default {
+  components: {
+    DeleteModalComponent,
+  },
   props: {
     displayedMembers: {
       type: Array,
@@ -65,6 +75,8 @@ export default {
   data() {
     return {
       localMembers: [],
+      memberToDeleteId: '',
+      showDeleteModal: false,
     };
   },
   created() {
@@ -73,6 +85,11 @@ export default {
   methods: {
     deleteMember,
     editMember,
+    showDeleteConfirmation(memberId) {
+      console.log('m', memberId);
+      this.memberToDeleteId = memberId;
+      this.showDeleteModal = true;
+    },
 
     deleteMemberMethod(memberId) {
       const index = this.localMembers.findIndex(
@@ -83,6 +100,7 @@ export default {
       }
       deleteMember(memberId);
       this.$emit('delete-member', memberId);
+      this.cancelDelete();
     },
     editMemberMethod(member) {
       member.editing = true;
@@ -91,6 +109,9 @@ export default {
       console.log(member);
       editMember(member.id, member);
       member.editing = false;
+    },
+    cancelDelete() {
+      this.showDeleteModal = false;
     },
   },
 };
