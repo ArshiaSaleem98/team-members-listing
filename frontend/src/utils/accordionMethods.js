@@ -8,30 +8,14 @@ import AddTeamService from '@/services/TeamServices/AddTeamService';
 import AddMemberService from '@/services/MemberServices/AddMemberService';
 
 export function formatMembers(teamMembers) {
-  console.log('members', teamMembers);
-  const membersArray = Object.values(teamMembers);
+  const teamMembersArray = teamMembers.map((member) => member.name);
+  const membersArray = Object.values(teamMembersArray);
   const lastMember = membersArray[membersArray.length - 1];
   const formattedMembers =
     membersArray.length > 1
       ? membersArray.slice(0, -1).join(', ') + ' & ' + lastMember
       : lastMember;
-  return {
-    teamMembersArray: membersArray,
-    formattedMembers,
-    showMore: false,
-  };
-}
-
-export function formatAccordionTeamItem(teamItem) {
-  const { teamMembersArray, formattedMembers, showMore } = formatMembers(
-    teamItem.teamMembersArray,
-  );
-  return {
-    ...teamItem,
-    teamMembersArray,
-    formattedMembers,
-    showMore,
-  };
+  return formattedMembers;
 }
 
 export async function fetchTeamsAndMembers(component) {
@@ -56,11 +40,10 @@ export async function fetchTeamsAndMembers(component) {
         open: false,
         teamName: teamName,
         teamMembers: teamMembers,
-        teamMembersArray: teamMembers.map((member) => member.name),
       };
     });
 
-    const formattedAccordionItems = accordionItems.map(formatAccordionTeamItem);
+    const formattedAccordionItems = accordionItems;
     component.accordionItems = formattedAccordionItems;
     component.$emit('update-teams-array', formattedAccordionItems);
   } catch (error) {

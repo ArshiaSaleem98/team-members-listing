@@ -11,7 +11,7 @@
       <span class="label-bold">Team Members:</span>
       <div class="team-members-wrapper">
         <div class="team-members">
-          {{ item.formattedMembers }}
+          {{ formatMembers(item.teamMembers) }}
         </div>
       </div>
     </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { formatMembers } from '@/utils/accordionMethods.js';
 export default {
   props: {
     item: {
@@ -29,6 +30,9 @@ export default {
       type: String,
       required: true,
     },
+  },
+  methods: {
+    formatMembers,
   },
 };
 </script>

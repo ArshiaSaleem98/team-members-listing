@@ -64,6 +64,7 @@
               <div class="container-padding">
                 <h2 class="team-members-title">Team Members</h2>
                 <team-members-table
+                  @delete-member="deleteMemberMethod"
                   :displayed-members="displayedMembers(item)"
                   :fetch-teams-and-members="fetchTeamsAndMembers"
                 ></team-members-table>
@@ -127,6 +128,7 @@ export default {
         return [];
       };
     },
+
     displayedItems() {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
@@ -140,6 +142,20 @@ export default {
     this.fetchTeamsAndMembers();
   },
   methods: {
+    deleteMemberMethod(memberId) {
+      console.log('memberdelete', memberId);
+      this.accordionItems.forEach((item) => {
+        const index = item.teamMembers.findIndex(
+          (member) => member.id === memberId,
+        );
+        if (index !== -1) {
+          const deletedMember = item.teamMembers[index];
+          item.teamMembers.splice(index, 1);
+          console.log('Deleted Member:', deletedMember);
+        }
+      });
+      this.cancelDelete();
+    },
     deleteTeamMethod(id, teamOptions) {
       const { index } = teamOptions;
       this.showDeleteModal = false;
