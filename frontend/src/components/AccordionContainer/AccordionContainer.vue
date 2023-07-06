@@ -2,7 +2,7 @@
   <div class="accordion">
     <transition-group name="accordion-item" tag="div">
       <div
-        v-for="(item, index) in accordionItems"
+        v-for="(item, index) in displayedItems"
         :key="item.id"
         class="accordion-item"
         :class="{ 'accordion-item--active': item.open }"
@@ -41,7 +41,7 @@
           <span
             class="accordion-icon"
             :class="{ open: item.open }"
-            @click="toggleItem(index)"
+            @click="toggleItem(item)"
           >
             &#x25BE;
           </span>
@@ -73,6 +73,11 @@
         </transition>
       </div>
     </transition-group>
+    <PaginationComponent
+      :currentPage="currentPage"
+      :totalPages="totalPages"
+      @page-change="changePage"
+    ></PaginationComponent>
   </div>
 </template>
 
@@ -84,22 +89,25 @@ import {
 } from '@/utils/accordionMethods.js';
 import TeamMembersTable from '@/components/TeamMembersTable/TeamMembersTable.vue';
 import TeamDetailsContainer from '@/components/TeamDetailsContainer/TeamDetailsContainer.vue';
+import PaginationComponent from '@/components/PaginationComponent/PaginationComponent.vue';
 
 export default {
   components: {
     TeamMembersTable,
     TeamDetailsContainer,
+    PaginationComponent,
   },
   data() {
     return {
       teams: [],
       accordionItems: [],
+      currentPage: 1,
+      pageSize: 1,
     };
   },
-
   computed: {
     displayedMembers() {
-      return (item) => {
+      return function (item) {
         if (item.teamMembers) {
           console.log('itemMember', item.teamMembers);
           return item.teamMembers;
@@ -107,23 +115,30 @@ export default {
         return [];
       };
     },
+    displayedItems() {
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      return this.accordionItems.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      return Math.ceil(this.accordionItems.length / this.pageSize);
+    },
   },
   mounted() {
     this.fetchTeamsAndMembers();
   },
   methods: {
     deleteTeamMethod(id, index) {
-      const position = this.accordionItems.findIndex((item) => item.id === id);
-      if (index !== -1) {
-        this.accordionItems.splice(position, 1);
-        this.$emit('update-teams-array', this.accordionItems);
-      }
-      deleteTeam(id);
+      return deleteTeam(id, index, this);
+    },
+    fetchTeamsAndMembers() {
+      return fetchTeamsAndMembers(this);
     },
 
     toggleItem(index) {
-      this.accordionItems.forEach((item, i) => {
-        if (i === index) {
+      console.log('toggleItem', index);
+      this.accordionItems.forEach((item) => {
+        if (item.id === index.id) {
           item.open = !item.open;
         } else {
           item.open = false;
@@ -134,23 +149,16 @@ export default {
     startEditing(index) {
       this.accordionItems[index].editing = true;
     },
-
     saveTeam(id, editedTitle, index) {
       this.accordionItems[index].title = editedTitle;
       this.accordionItems[index].name = editedTitle;
       this.accordionItems[index].editing = false;
-      editTeam(id, this.accordionItems[index], this.fetchTeamsAndMembers);
+      editTeam(id, this.accordionItems[index], this);
       this.$emit('update-teams-array', this.accordionItems);
     },
 
-    async fetchTeamsAndMembers() {
-      try {
-        const accordionItems = await fetchTeamsAndMembers();
-        this.accordionItems = accordionItems;
-        this.$emit('update-teams-array', this.accordionItems);
-      } catch (error) {
-        console.error('Error fetching teams and members:', error);
-      }
+    changePage(page) {
+      this.currentPage = page;
     },
   },
 };

@@ -4,10 +4,10 @@
       <h2>{{ title }}</h2>
       <FormComponent
         :label="label"
+        :teams-array="teamsArray"
         @cancel="cancelForm"
         @teamAdded="handleTeamAdded"
         @memberAdded="handleMemberAdded"
-        :teams-array="teamsArray"
       />
     </div>
   </div>

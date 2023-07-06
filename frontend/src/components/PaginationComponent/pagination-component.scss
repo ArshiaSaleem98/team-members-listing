@@ -1,0 +1,17 @@
+.pagination {
+  margin-top: 10px;
+}
+
+.pagination-item {
+  display: inline-block;
+  margin-right: 5px;
+  padding: 5px 10px;
+  background-color: #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-item.active {
+  background-color: #555;
+  color: white;
+}

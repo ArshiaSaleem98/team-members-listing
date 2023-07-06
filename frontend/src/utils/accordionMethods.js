@@ -34,7 +34,7 @@ export function formatAccordionTeamItem(teamItem) {
   };
 }
 
-export async function fetchTeamsAndMembers() {
+export async function fetchTeamsAndMembers(component) {
   try {
     const teams = await GetAllTeamsService.getTeams();
     console.log('teams', teams);
@@ -60,10 +60,11 @@ export async function fetchTeamsAndMembers() {
       };
     });
 
-    return accordionItems.map(formatAccordionTeamItem);
+    const formattedAccordionItems = accordionItems.map(formatAccordionTeamItem);
+    component.accordionItems = formattedAccordionItems;
+    component.$emit('update-teams-array', formattedAccordionItems);
   } catch (error) {
     console.error('Error fetching teams and members:', error);
-    return [];
   }
 }
 
@@ -80,20 +81,42 @@ export async function addTeam(component, data) {
   }
 }
 
-export function deleteTeam(teamId) {
-  DeleteTeamService.deleteTeam(teamId)
-    .then((response) => response)
-    .catch((error) => {
-      console.error('Error in deleting the team:', error);
-    });
+export function deleteTeam(teamId, index, component) {
+  return new Promise((resolve, reject) => {
+    const position = component.accordionItems.findIndex(
+      (item) => item.id === teamId,
+    );
+    if (index !== -1) {
+      component.accordionItems.splice(position, 1);
+      component.$emit('update-teams-array', component.accordionItems);
+    }
+
+    DeleteTeamService.deleteTeam(teamId)
+      .then((response) => {
+        resolve(response);
+        const totalItems = component.accordionItems.length;
+        const totalPages = Math.ceil(totalItems / component.pageSize);
+        if (totalItems > 0 && component.currentPage > totalPages) {
+          component.currentPage = totalPages;
+        }
+        component.fetchTeamsAndMembers(
+          component.pageSize,
+          component.currentPage,
+        );
+      })
+      .catch((error) => {
+        console.error('Error deleting the team:', error);
+        reject(error);
+      });
+  });
 }
 
-export function editTeam(teamId, editedData, fetchTeamsAndMembers) {
+export function editTeam(teamId, editedData, component) {
   console.log('editedTeam', teamId, editedData);
   EditTeamService.editTeam(teamId, editedData)
     .then((response) => {
       console.log('Team successfully Edited:', response);
-      fetchTeamsAndMembers();
+      component.fetchTeamsAndMembers();
     })
     .catch((error) => {
       console.error('Error in editing the team:', error);
