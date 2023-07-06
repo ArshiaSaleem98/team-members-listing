@@ -20,6 +20,7 @@
             />
             <span v-else>{{ teamMember.name }}</span>
           </td>
+
           <td>
             <button
               v-if="!teamMember.editing"
@@ -37,7 +38,7 @@
             </button>
             <button
               class="member-delete-button"
-              @click="deleteMemberMethod(teamMember.id)"
+              @click="showDeleteConfirmation(teamMember.id)"
             >
               Delete
             </button>
@@ -45,13 +46,23 @@
         </tr>
       </tbody>
     </table>
+    <DeleteModalComponent
+      v-if="showDeleteModal"
+      :item-id="memberToDeleteId"
+      @delete-team="deleteMemberMethod"
+      @cancel-delete="cancelDelete"
+    ></DeleteModalComponent>
   </div>
 </template>
 
 <script>
 import { deleteMember, editMember } from '@/utils/accordionMethods.js';
+import DeleteModalComponent from '@/components/DeleteModalComponent/DeleteModalComponent.vue';
 
 export default {
+  components: {
+    DeleteModalComponent,
+  },
   props: {
     displayedMembers: {
       type: Array,
@@ -65,15 +76,15 @@ export default {
   data() {
     return {
       localMembers: [],
+      showDeleteModal: false,
+      memberToDeleteId: '',
+      memberToDelete: '',
     };
   },
   created() {
     this.localMembers = [...this.displayedMembers];
   },
   methods: {
-    deleteMember,
-    editMember,
-
     deleteMemberMethod(memberId) {
       const index = this.localMembers.findIndex(
         (member) => member.id === memberId,
@@ -82,14 +93,24 @@ export default {
         this.localMembers.splice(index, 1);
       }
       deleteMember(memberId);
+      this.cancelDelete();
     },
     editMemberMethod(member) {
       member.editing = true;
+      this.fetchTeamsAndMembers();
     },
     saveMember(member) {
-      console.log(member);
       editMember(member.id, member);
       member.editing = false;
+      this.fetchTeamsAndMembers();
+    },
+    showDeleteConfirmation(member) {
+      console.log('member', member);
+      this.memberToDeleteId = member;
+      this.showDeleteModal = true;
+    },
+    cancelDelete() {
+      this.showDeleteModal = false;
     },
   },
 };

@@ -33,7 +33,7 @@
             </button>
             <button
               class="delete-button"
-              @click="deleteTeamMethod(item.id, index)"
+              @click="showDeleteConfirmation(item.id, index)"
             >
               Delete
             </button>
@@ -72,12 +72,19 @@
           </div>
         </transition>
       </div>
+      <DeleteModalComponent
+        v-if="showDeleteModal"
+        :item-id="teamToDeleteId"
+        :index="teamToDeleteIndex"
+        @delete-team="deleteTeamMethod"
+        @cancel-delete="cancelDelete"
+      ></DeleteModalComponent>
+      <PaginationComponent
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        @page-change="changePage"
+      ></PaginationComponent>
     </transition-group>
-    <PaginationComponent
-      :currentPage="currentPage"
-      :totalPages="totalPages"
-      @page-change="changePage"
-    ></PaginationComponent>
   </div>
 </template>
 
@@ -90,12 +97,14 @@ import {
 import TeamMembersTable from '@/components/TeamMembersTable/TeamMembersTable.vue';
 import TeamDetailsContainer from '@/components/TeamDetailsContainer/TeamDetailsContainer.vue';
 import PaginationComponent from '@/components/PaginationComponent/PaginationComponent.vue';
+import DeleteModalComponent from '@/components/DeleteModalComponent/DeleteModalComponent.vue';
 
 export default {
   components: {
     TeamMembersTable,
     TeamDetailsContainer,
     PaginationComponent,
+    DeleteModalComponent,
   },
   data() {
     return {
@@ -103,6 +112,9 @@ export default {
       accordionItems: [],
       currentPage: 1,
       pageSize: 1,
+      showDeleteModal: false,
+      teamToDeleteId: '',
+      teamToDeleteIndex: '',
     };
   },
   computed: {
@@ -128,8 +140,13 @@ export default {
     this.fetchTeamsAndMembers();
   },
   methods: {
-    deleteTeamMethod(id, index) {
+    deleteTeamMethod(id, teamOptions) {
+      const { index } = teamOptions;
+      this.showDeleteModal = false;
       return deleteTeam(id, index, this);
+    },
+    cancelDelete() {
+      this.showDeleteModal = false;
     },
     fetchTeamsAndMembers() {
       return fetchTeamsAndMembers(this);
@@ -144,6 +161,10 @@ export default {
           item.open = false;
         }
       });
+    },
+    showDeleteConfirmation(teamId, index) {
+      (this.teamToDeleteId = teamId), (this.teamToDeleteIndex = index);
+      this.showDeleteModal = true;
     },
 
     startEditing(index) {
