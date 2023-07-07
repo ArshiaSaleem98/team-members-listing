@@ -16,7 +16,7 @@ To get started, follow the steps below to set up the Team & Members Listing webs
 
 1. Clone the repository using Git:
 
-   `git clone https://github.com/ArshiaSaleem98/VueProject.git`
+   `https://github.com/ArshiaSaleem98/team-members-listing.git`
 
 ### Backend Setup
 
