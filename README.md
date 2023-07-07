@@ -119,7 +119,7 @@ frontend/
     ├─ views/          => Layouts for views
     ├─ App.vue         => Main App component
     └─ main.js         => Main Vue instance
-    └─ config.js       => Custom configuration file to define the base URL for Vue app and for testing
+    └─ config.js       => Custom configuration file to define the base URL for Vue app
     └─ vue.config.js   => Vue CLI configuration file
 ```
 
