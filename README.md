@@ -1,4 +1,4 @@
-# User Informatio
+# Team & Members Listing Website
 
 This website is a simple yet powerful solution that allows you to manage teams and their members effectively. Built using Vue.js and Node.js, this website demonstrates seamless interaction between the frontend, backend, and an SQL database (SQLite). It provides a range of features, including viewing details, adding, editing, and deleting teams and members.
 
