@@ -58,6 +58,30 @@ The client side of the application will run on `http://localhost:8080`.
 
 Now you will able to access the Team & Members Listing website in your web browser by visiting `http://localhost:8080`.
 
+## Tools and Libraries
+
+The following tools, libraries, and frameworks are being used in the development of this application:
+
+### Backend Tools and Libraries
+
+- Node.js: A JavaScript runtime built on Chrome's V8 JavaScript engine, used for server-side development.
+- Express.js: A fast and minimalist web application framework for Node.js, used for building the backend server.
+- SQLite: A serverless, relational database engine used to store team and member data.
+
+### Frontend Tools and Libraries
+
+- Vue.js: A progressive JavaScript framework for building user interfaces, used for frontend development.
+- Vue Router: A routing library for Vue.js, enabling navigation and routing within the application.
+- Axios: A promise-based HTTP client for making API requests, used to communicate between the frontend and backend.
+- Bootstrap: A popular CSS framework for responsive and mobile-first web development, used for styling the application.
+- SCSS: A preprocessor for CSS, enhancing the styling capabilities and maintainability of the application's CSS code.
+- BEM Methodology: A CSS naming convention that stands for Block, Element, Modifier. It helps in writing modular and reusable CSS by providing a structured way of naming classes.
+
+### Code Quality and Compatibility Tools
+- ESLint: A JavaScript linter for maintaining code quality and ensuring adherence to coding standards.
+- Babel: A JavaScript compiler that transforms modern JavaScript code into backward-compatible versions, ensuring cross-browser compatibility.
+
+These tools, libraries, and frameworks, along with the BEM methodology, have been used to create a robust and efficient Team & Members Listing website. 
 
 
 
