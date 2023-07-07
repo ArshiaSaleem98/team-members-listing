@@ -115,6 +115,45 @@ frontend/
     └─ vue.config.js   => Vue CLI configuration file
 ```
 
+## App Layout and Design
+
+The Team & Members Listing website consists of a single page with a user-friendly interface. Below can be seen the layout and functionality of the various sections:
+
+### Teams & Members:
+
+### Teams Section
+
+The Teams Section displays teams in accordions. It is located between the header and the team & member-creating buttons.
+
+- Adding Team and Adding Member Buttons: Two buttons are displayed for adding a team and adding a member. When clicked, they open side modals containing the forms for creating a team and a member.
+
+- Creating Member Form: The member creation form includes two fields: one for selecting the team and the other for entering the member's name. If any of the fields are not filled, a message is displayed prompting the user to complete the required information.
+
+- Creating Team Form: The team creation form includes one field for entering the team name. After clicking the save button, the team will be created.
+  
+- Team Accordion Header: Each team accordion header displays the team's name, delete button, and edit button. Clicking the edit button allows the user to edit the team name directly within the header. If no changes are made, the name remains unchanged. The delete button opens a delete confirmation modal with two options: delete and cancel. Clicking delete will delete the team and its associated members.
+
+- Dropdown Icon: The dropdown icon in the accordion header expands the accordion and reveals the content section.
+
+- Team Details: The team details section displays the team name and its members, if any. If no team members are found, a message is displayed indicating "No team members found".
+
+Team Members: This section displays the team members in a scrollable table format. Each member has two buttons: edit and delete. Clicking the edit button allows the user to edit the member's name within the table. Clicking the delete button opens a delete confirmation modal. Once confirmed, the member is removed.
+
+### Pagination
+
+Pagination is located below the team accordion section. It is only displayed if there is more than one page of teams. Each page can display a maximum of 10 teams. Arrow buttons are provided for easier navigation between pages.
+
+With this intuitive layout and interactive functionality, users can easily manage teams and their associated members, add new teams and members, edit existing information, and navigate through the teams using pagination.
+
+### Responsive Design and Device Compatibility
+
+The Team & Members Listing website features a responsive design that adapts the layout to different devices, ensuring an optimal user experience across desktop, tablet, and mobile screens. Here's an overview of the responsiveness of the website:
+
+- Desktop and Tablet Mode: In desktop and tablet modes, the website provides a spacious and user-friendly layout. The team section, accordions, buttons, forms, and tables are designed to make efficient use of the screen space, allowing users to view and manage teams and members effortlessly.
+
+- Mobile Mode: In mobile mode, the website adopts a more compact design to accommodate smaller screens. The layout is optimized for mobile devices, providing a seamless experience for users on the go. The accordions, buttons, forms, and tables are adjusted to ensure readability and ease of use.
+
+
 
 
 
