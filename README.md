@@ -83,6 +83,38 @@ The following tools, libraries, and frameworks are being used in the development
 
 These tools, libraries, and frameworks, along with the BEM methodology, have been used to create a robust and efficient Team & Members Listing website. 
 
+## Project Structure
+
+The Team & Members Listing website has a well-organized project structure, with separate sections for the backend and frontend. Here is an overview of the project structure:
+
+### Backend Structure
+
+```
+backend/
+├─ controllers/      => Contains controller files for handling business logic
+├─ db/               => Holds the database file and related scripts
+├─ models/           => Includes the models representing database entities
+├─ routes/           => Contains the route files for defining API endpoints
+└─ server.js         => Main server configuration file
+```
+
+### Frontend Structure
+
+```
+frontend/
+└─ src/
+    ├─ assets/         => Project assets (e.g., images, styles)
+    ├─ components/     => Vue global components
+    ├─ router/         => Vue-router configuration
+    ├─ services/       => API service files for making HTTP requests
+    ├─ utils/          => Global constants and helper functions
+    ├─ views/          => Layouts for views
+    ├─ App.vue         => Main App component
+    └─ main.js         => Main Vue instance
+    └─ config.js       => Custom configuration file to define the base URL for Vue app and for testing
+    └─ vue.config.js   => Vue CLI configuration file
+```
+
 
 
 
