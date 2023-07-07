@@ -1,14 +1,18 @@
 <template>
-  <div v-show="showModal" class="modal-container">
+  <div v-show="showModal" class="modal-container" aria-label="Modal">
     <div class="modal-content">
-      <h2>{{ title }}</h2>
-      <FormComponent
-        :label="label"
-        :teams-array="teamsArray"
-        @cancel="cancelForm"
-        @teamAdded="handleTeamAdded"
-        @memberAdded="handleMemberAdded"
-      />
+      <div class="modal-header">
+        <h2>{{ title }}</h2>
+      </div>
+      <div class="modal-content-wrapper">
+        <FormComponent
+          :label="label"
+          :teams-array="teamsArray"
+          @cancel="cancelForm"
+          @team-added="handleTeamAdded"
+          @member-added="handleMemberAdded"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +43,7 @@ export default {
       required: true,
     },
   },
+  emits: ['teamAdded', 'memberAdded', 'close-modal'],
   methods: {
     toggleModal() {
       this.$emit('close-modal');

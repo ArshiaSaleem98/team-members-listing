@@ -1,13 +1,21 @@
 <template>
   <div class="home-page">
     <div class="home-page__header">
-      <h1>{{ pageTitle }}</h1>
+      <h1 page-title>{{ pageTitle }}</h1>
     </div>
     <div class="add-team-member-modal-button-container">
-      <button class="add-team-button" @click="toggleModal('team')">
+      <button
+        class="add-team-button"
+        aria-label="Add Team"
+        @click="toggleModal('team')"
+      >
         Add Team
       </button>
-      <button class="add-member-button" @click="toggleModal('member')">
+      <button
+        class="add-member-button"
+        aria-label="Add Member"
+        @click="toggleModal('member')"
+      >
         Add Member
       </button>
     </div>
@@ -22,8 +30,8 @@
       :title="modalTitle"
       :show-modal="showModal"
       :teams-array="teamsArray"
-      @teamAdded="handleTeamAdded"
-      @memberAdded="handleMemberAdded"
+      @team-added="handleTeamAdded"
+      @member-added="handleMemberAdded"
       @close-modal="toggleModal"
     />
   </div>
@@ -41,7 +49,7 @@ export default {
   },
   data() {
     return {
-      pageTitle: 'Team Member Listing Page',
+      pageTitle: 'Team member listing page',
       showModal: false,
       modalType: '',
       teamsArray: [],

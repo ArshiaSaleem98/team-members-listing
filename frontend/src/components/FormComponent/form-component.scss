@@ -1,24 +1,133 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
 .form-buttons {
   margin-top: 10px;
   display: flex;
+
+  button {
+    flex: 1;
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .btn-primary {
+    background-color: #e6cb6d;
+    color: $black;
+    border-color: #e6cb6d;
+
+    &:hover {
+      background-color: #dec15a;
+    }
+  }
+
+  .btn-secondary {
+    background-color: #adadad;
+    color: $black;
+    border-color: #adadad;
+
+    &:hover {
+      background-color: #a5a2a2;
+    }
+  }
 }
 
 label {
   display: block;
   text-align: left;
   margin-bottom: 15px;
+  font-weight: bold;
+  margin-top: 15px;
 }
 
-input[type='text'] {
+.input-container {
+  display: flex;
+  align-items: baseline;
+
+  input {
+    flex: 1;
+
+    &.form-control {
+      border-radius: 0;
+      border-top-right-radius: 0.25rem;
+      border-bottom-right-radius: 0.25rem;
+    }
+  }
+
+  .select-wrapper {
+    flex: 1;
+    position: relative;
+
+    select {
+      width: 100%;
+
+      &.form-control {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+}
+
+.select-wrapper {
   width: 100%;
-  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
 }
 
-button {
-  flex: 1;
-  margin-right: 5px;
+.select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #495057;
 }
 
-button:last-child {
-  margin-right: 0;
+.select-arrow i {
+  font-size: 0.875rem;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &.is-invalid {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url('./../../assets/incorrect.png');
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+
+  &.is-valid {
+    border-color: #28a745;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url('./../../assets/correct.png');
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+}
+
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 14px;
+  color: #dc3545;
+  text-align: left;
 }

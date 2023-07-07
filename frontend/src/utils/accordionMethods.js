@@ -21,14 +21,12 @@ export function formatMembers(teamMembers) {
 export async function fetchTeamsAndMembers(component) {
   try {
     const teams = await GetAllTeamsService.getTeams();
-    console.log('teams', teams);
 
     const membersOfTeams = await Promise.all(
       teams.map((team) => GetAllTeamMembersService.getMembersOfTeam(team.id)),
     );
 
     const accordionItems = membersOfTeams.map((members, index) => {
-      console.log('index', index);
       const teamId = members.length > 0 ? members[0].teamId : teams[index]?.id;
       const team = teams.find((team) => team.id === teamId);
       const teamMembers = members || [];
@@ -54,7 +52,6 @@ export async function fetchTeamsAndMembers(component) {
 export async function addTeam(component, data) {
   try {
     const response = await AddTeamService.addTeam(data);
-    console.log('Team added successfully:', response);
     component.$emit('teamAdded', response.data);
     component.clearForm();
     component.$emit('cancel');
@@ -95,7 +92,6 @@ export function deleteTeam(teamId, index, component) {
 }
 
 export function editTeam(teamId, editedData, component) {
-  console.log('editedTeam', teamId, editedData);
   EditTeamService.editTeam(teamId, editedData)
     .then((response) => {
       console.log('Team successfully Edited:', response);
@@ -109,7 +105,6 @@ export function editTeam(teamId, editedData, component) {
 export async function addMember(component, data) {
   try {
     const response = await AddMemberService.addMember(data);
-    console.log('Member added successfully:', response);
     component.$emit('memberAdded', response.data);
     component.clearForm();
   } catch (error) {
@@ -119,7 +114,6 @@ export async function addMember(component, data) {
 }
 
 export function deleteMember(memberId) {
-  console.log('delte', memberId);
   DeleteMemberService.deleteMember(memberId)
     .then((response) => {
       console.log('Member deleted successfully:', response);
@@ -130,7 +124,6 @@ export function deleteMember(memberId) {
 }
 
 export function editMember(memberId, editedData) {
-  console.log('edit', memberId);
   EditMemberService.editMember(memberId, editedData)
     .then((response) => {
       console.log('Member edited successfully:', response);

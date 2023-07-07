@@ -2,19 +2,37 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 
+.section-header {
+  background-color: $gray-300;
+  border-bottom: 4px solid $yellow-300;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  padding: 10px;
+  color: $black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif;
+  margin-bottom: 10px;
+}
+
 .accordion {
   width: 100%;
+  height: 1000px;
 
   .accordion-item {
     border: 1px solid $gray-300;
     margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
     &--active {
       border-color: $gray-400;
     }
 
     &__header {
-      background-color: $gray-200;
+      background-color: $gray-100;
       padding: 10px;
       cursor: pointer;
       display: flex;
@@ -42,7 +60,7 @@
 
     .container-padding {
       padding: 5px;
-      height: 300px;
+      height: 205px;
       overflow-y: auto;
     }
 
@@ -66,49 +84,93 @@
     .accordion-item__buttons {
       display: flex;
       gap: 10px;
+      align-items: center;
       margin-left: auto;
     }
-
-    .delete-button {
-      padding: 5px 10px;
-      background-color: $primary;
-      color: $white;
+    .accordian-open-button,
+    .edit-button,
+    .save-button {
+      width: 32px;
+      height: 32px;
+      background-color: none;
+      padding: 0;
+      color: black;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .accordian-open-button,
+    .edit-button:hover,
+    .save-button:hover {
+      background-color: none;
+    }
+
+    .delete-button {
+      width: 32px;
+      height: 32px;
+      background-color: none;
+      padding: 0;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .icon-wrapper i {
+        color: #d9534f;
+        font-size: 18px;
+      }
     }
 
     .delete-button:hover {
-      background-color: $primary;
+      background-color: none;
+    }
+    .accordian-open-button .icon-wrapper i,
+    .edit-button .icon-wrapper i,
+    .save-button .icon-wrapper i {
+      color: #008b8b;
+      font-size: 18px;
+    }
+
+    .accordion-icon {
+      width: 32px;
+      height: 32px;
+      color: #000;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .accordion-icon.open {
+      transform: rotate(180deg);
     }
   }
-  .accordion-item-enter-active,
-  .accordion-item-leave-active {
-    transition: opacity 0.3s ease;
-  }
 
-  .accordion-item-enter,
-  .accordion-item-leave-to {
-    opacity: 0;
-  }
-
-  .accordion-content-enter,
-  .accordion-content-leave-to {
-    max-height: 0;
-    overflow: hidden;
-  }
   @media (max-width: 768px) {
     .accordion-item__right-container {
       width: 100%;
     }
+
     .accordion-item__right-container--mobile {
       order: 1;
     }
+
     .accordion-item__left-container {
       width: 100%;
     }
+
     .accordion-item__left-container--mobile {
       order: 2;
     }
+  }
+
+  .team-members-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
   }
 }

@@ -1,6 +1,7 @@
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
+
 .container-padding {
   padding: 5px;
   height: 300px;
@@ -9,15 +10,21 @@
 
 .team-details {
   text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.no-members-message {
+  color: #888;
 }
 
 .team-label {
   text-align: left;
   margin-bottom: 5px;
-}
 
-.label-bold {
-  font-weight: bold;
+  & .label-bold {
+    font-weight: bold;
+  }
 }
 
 .team-name {
@@ -28,29 +35,13 @@
   margin-top: 10px;
   padding-bottom: 10px;
   white-space: nowrap;
-}
 
-.team-members {
-  display: flex;
-  gap: 10px;
+  & .team-members {
+    display: flex;
+    gap: 10px;
+  }
 }
 
 .team-member {
   white-space: nowrap;
-}
-
-.button-group {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  gap: 10px;
-}
-
-.edit-button,
-.delete-button,
-.add-member-button {
-  padding: 5px 10px;
-  background-color: $gray-200;
-  border: none;
-  cursor: pointer;
 }

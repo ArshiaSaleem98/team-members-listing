@@ -1,9 +1,23 @@
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
+
 .team-members-table-wrapper {
-  height: 213px;
-  overflow-y: scroll;
+  position: relative;
+  height: 130px;
+
+  .message-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .no-members-message {
+      color: #888;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
 }
 
 .team-members-table {
@@ -11,38 +25,39 @@
   margin-top: 10px;
   border-collapse: collapse;
   table-layout: fixed;
-}
 
-.team-members-table th,
-.team-members-table td {
-  padding: 8px;
-  border: 1px solid $gray-300;
-}
+  th,
+  td {
+    padding: 8px;
+    border: 1px solid $gray-300;
+  }
 
-.team-members-table th {
-  font-weight: bold;
-  background-color: $gray-200;
+  th {
+    font-weight: bold;
+    background-color: $gray-200;
+  }
 }
 
 .member-edit-button,
 .member-save-button,
 .member-delete-button {
+  width: 100px;
   padding: 6px 12px;
   margin-right: 5px;
   border-radius: 3px;
   border: none;
   color: white;
   cursor: pointer;
-}
 
-.member-edit-button {
-  background-color: $blue;
-}
+  &.member-edit-button {
+    background-color: #42bcbc;
+  }
 
-.member-save-button {
-  background-color: $green;
-}
+  &.member-save-button {
+    background-color: #42bcbc;
+  }
 
-.member-delete-button {
-  background-color: $red;
+  &.member-delete-button {
+    background-color: #d9534f;
+  }
 }

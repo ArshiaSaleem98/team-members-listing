@@ -1,21 +1,49 @@
 <template>
   <div>
-    <label v-if="label === 'Member Name'">Team Name </label>
-    <select
-      v-if="label === 'Member Name'"
-      v-model="selectedTeam"
-      class="full-width-select"
-    >
-      <option v-for="team in teamsArray" :key="team.id" :value="team.id">
-        {{ team.teamName }}
-      </option>
-    </select>
+    <label v-if="label === 'Member Name'">Team Name</label>
+    <div class="form-group">
+      <div class="select-wrapper">
+        <select
+          v-if="label === 'Member Name'"
+          v-model="selectedTeam"
+          class="form-control"
+          :placeholder="label"
+          aria-label="Select Team"
+        >
+          <option value="" disabled>Select Team</option>
+          <option v-for="team in teamsArray" :key="team.id" :value="team.id">
+            {{ team.teamName }}
+          </option>
+        </select>
+        <div
+          v-if="label === 'Member Name'"
+          class="select-arrow"
+          aria-hidden="true"
+        >
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+    </div>
     <label>{{ label }}</label>
-
-    <input v-model="formData" type="text" />
+    <div class="form-group">
+      <input
+        v-model="formData"
+        type="text"
+        :class="{
+          'form-control': true,
+          'is-invalid': !formData,
+          'is-valid': formData,
+        }"
+        :placeholder="label"
+        aria-label="Input Field"
+      />
+      <div v-if="!formData" class="invalid-feedback">
+        Please fill the input field.
+      </div>
+    </div>
     <div class="form-buttons">
-      <button @click="save">Save</button>
-      <button @click="cancel">Cancel</button>
+      <button class="btn btn-primary" @click="save">Save</button>
+      <button class="btn btn-secondary" @click="cancel">Cancel</button>
     </div>
   </div>
 </template>
@@ -35,6 +63,7 @@ export default {
       required: true,
     },
   },
+  emits: ['cancel'],
   data() {
     return {
       formData: '',
@@ -42,6 +71,7 @@ export default {
       teams: [],
     };
   },
+
   methods: {
     clearForm() {
       this.formData = '';
@@ -51,9 +81,13 @@ export default {
       const data = {
         name: this.formData,
       };
-      if (this.label === 'Team Name') {
+      if (this.label === 'Team Name' && this.formData !== '') {
         addTeam(this, data);
-      } else if (this.label === 'Member Name') {
+      } else if (
+        this.label === 'Member Name' &&
+        this.formData !== '' &&
+        this.selectedTeam !== ''
+      ) {
         const addNewMember = {
           name: this.formData,
           teamId: this.selectedTeam,
@@ -62,6 +96,7 @@ export default {
       }
     },
     cancel() {
+      this.clearForm();
       this.$emit('cancel');
     },
   },
@@ -70,7 +105,4 @@ export default {
 
 <style scoped lang="scss">
 @import './form-component';
-.full-width-select {
-  width: 100%;
-}
 </style>

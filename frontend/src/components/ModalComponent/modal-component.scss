@@ -1,30 +1,49 @@
 .modal-container {
   position: fixed;
+  border-left: 2px solid #e6cb6d;
   top: 0;
   right: 0;
   bottom: 0;
+  border-radius: 8px;
   width: 400px;
-  background-color: white;
+  background-color: #fefcf5;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   z-index: 999;
-}
 
-.modal-content-wrapper {
-  flex: 1;
-  display: flex;
-}
+  .modal-content-wrapper {
+    flex: 1;
+    display: flex;
+    border-radius: 8px;
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  flex: 1;
-  overflow-y: auto;
-}
+    padding-top: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 
-.close-modal-button {
-  margin-top: 10px;
-  align-self: flex-end;
+    .modal-content {
+      background-color: #fefcf5;
+      border-radius: 8px;
+
+      overflow-y: auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  .modal-header {
+    height: 90px;
+    border-top-left-radius: 8px;
+    padding: 20px;
+    background-color: #e6cb6d;
+    border-bottom: 2px solid #008b8b;
+
+    h2 {
+      font-family: 'Arial', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
 }

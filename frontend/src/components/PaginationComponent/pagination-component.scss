@@ -1,17 +1,38 @@
 .pagination {
-  margin-top: 10px;
-}
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
-.pagination-item {
-  display: inline-block;
-  margin-right: 5px;
-  padding: 5px 10px;
-  background-color: #ddd;
-  border-radius: 4px;
-  cursor: pointer;
-}
+  .pagination-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #555555;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
 
-.pagination-item.active {
-  background-color: #555;
-  color: white;
+    &.active {
+      background-color: #e6cb6d;
+      color: black;
+    }
+
+    &.pagination-prev,
+    &.pagination-next {
+      i {
+        margin-top: 1px;
+      }
+    }
+
+    &[disabled] {
+      display: none;
+    }
+  }
 }

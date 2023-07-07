@@ -1,6 +1,8 @@
 <template>
-  <div class="accordion">
-    <transition-group name="accordion-item" tag="div">
+  <div>
+    <div class="section-header">Teams Section</div>
+
+    <div class="accordion">
       <div
         v-for="(item, index) in displayedItems"
         :key="item.id"
@@ -13,79 +15,112 @@
               v-if="item.editing"
               v-model="item.editedTitle"
               class="team-name-edit"
+              :placeholder="item.title"
+              aria-label="Edit team name"
             />
             <div v-else class="team-name">{{ item.title }}</div>
           </div>
           <div class="accordion-item__buttons">
-            <button
+            <span
               v-if="!item.editing"
               class="edit-button"
+              tabindex="0"
+              role="button"
+              aria-label="Edit"
               @click="startEditing(index)"
             >
-              Edit
-            </button>
-            <button
+              <div class="icon-wrapper">
+                <i class="fas fa-edit"></i>
+              </div>
+            </span>
+            <span
               v-else
               class="save-button"
-              @click="saveTeam(item.id, item.editedTitle, index)"
+              tabindex="0"
+              role="button"
+              aria-label="Save"
+              @click="
+                saveTeam(
+                  item.id,
+                  item.editedTitle ? item.editedTitle : item.title,
+                  index,
+                )
+              "
             >
-              Save
-            </button>
-            <button
-              class="delete-button"
-              @click="showDeleteConfirmation(item.id, index)"
-            >
-              Delete
-            </button>
-          </div>
-          <span
-            class="accordion-icon"
-            :class="{ open: item.open }"
-            @click="toggleItem(item)"
-          >
-            &#x25BE;
-          </span>
-        </div>
-        <transition name="accordion-content">
-          <div v-if="item.open" class="accordion-item__content">
-            <div
-              class="accordion-item__left-container"
-              :class="{ 'accordion-item__left-container--mobile': isMobile }"
-            >
-              <TeamDetailsContainer
-                :title="item.title"
-                :item="item"
-              ></TeamDetailsContainer>
-            </div>
-            <div
-              class="accordion-item__right-container"
-              :class="{ 'accordion-item__right-container--mobile': isMobile }"
-            >
-              <div class="container-padding">
-                <h2 class="team-members-title">Team Members</h2>
-                <team-members-table
-                  :displayed-members="displayedMembers(item)"
-                  :fetch-teams-and-members="fetchTeamsAndMembers"
-                  @delete-member="deleteMemberMethod"
-                ></team-members-table>
+              <div class="icon-wrapper">
+                <i class="fas fa-save"></i>
               </div>
+            </span>
+            <span
+              class="delete-button"
+              tabindex="0"
+              role="button"
+              aria-label="Delete"
+              @click="showDeleteConfirmation(item.id, index, item.title)"
+            >
+              <div class="icon-wrapper">
+                <i class="fas fa-trash"></i>
+              </div>
+            </span>
+            <span
+              class="accordion-icon"
+              tabindex="0"
+              role="button"
+              :aria-label="item.open ? 'Collapse' : 'Expand'"
+              @click="toggleItem(item)"
+            >
+              <div class="icon-wrapper">
+                <i
+                  class="fas"
+                  :class="{
+                    'fa-chevron-up': item.open,
+                    'fa-chevron-down': !item.open,
+                  }"
+                ></i>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div v-if="item.open" class="accordion-item__content">
+          <div
+            class="accordion-item__left-container"
+            :class="{ 'accordion-item__left-container--mobile': isMobile }"
+          >
+            <TeamDetailsContainer
+              :title="item.title"
+              :item="item"
+            ></TeamDetailsContainer>
+          </div>
+          <div
+            class="accordion-item__right-container"
+            :class="{ 'accordion-item__right-container--mobile': isMobile }"
+          >
+            <div class="container-padding">
+              <h2 class="team-members-title">Team Members</h2>
+              <team-members-table
+                :displayed-members="displayedMembers(item)"
+                :fetch-teams-and-members="fetchTeamsAndMembers"
+                @delete-member="deleteMemberMethod"
+              ></team-members-table>
             </div>
           </div>
-        </transition>
+        </div>
       </div>
       <DeleteModalComponent
         v-if="showDeleteModal"
+        :message="deleteModalMessage"
         :item-id="teamToDeleteId"
         :index="teamToDeleteIndex"
         @delete-team="deleteTeamMethod"
         @cancel-delete="cancelDelete"
       ></DeleteModalComponent>
       <PaginationComponent
+        v-if="totalPages > 1"
         :current-page="currentPage"
         :total-pages="totalPages"
         @page-change="changePage"
       ></PaginationComponent>
-    </transition-group>
+    </div>
   </div>
 </template>
 
@@ -107,15 +142,17 @@ export default {
     PaginationComponent,
     DeleteModalComponent,
   },
+  emits: ['update-teams-array'],
   data() {
     return {
       teams: [],
       accordionItems: [],
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 10,
       showDeleteModal: false,
       teamToDeleteId: '',
       teamToDeleteIndex: '',
+      teamToDeleteName: null,
     };
   },
   computed: {
@@ -137,21 +174,26 @@ export default {
     totalPages() {
       return Math.ceil(this.accordionItems.length / this.pageSize);
     },
+    deleteModalMessage() {
+      if (this.teamToDeleteName) {
+        const teamName = this.teamToDeleteName;
+        const message = `Are you sure you want to delete team <strong>${teamName}</strong> and all it's members?`;
+        return message;
+      }
+      return '';
+    },
   },
   mounted() {
     this.fetchTeamsAndMembers();
   },
   methods: {
     deleteMemberMethod(memberId) {
-      console.log('memberdelete', memberId);
       this.accordionItems.forEach((item) => {
         const index = item.teamMembers.findIndex(
           (member) => member.id === memberId,
         );
         if (index !== -1) {
-          const deletedMember = item.teamMembers[index];
           item.teamMembers.splice(index, 1);
-          console.log('Deleted Member:', deletedMember);
         }
       });
       this.cancelDelete();
@@ -169,7 +211,6 @@ export default {
     },
 
     toggleItem(index) {
-      console.log('toggleItem', index);
       this.accordionItems.forEach((item) => {
         if (item.id === index.id) {
           item.open = !item.open;
@@ -178,8 +219,11 @@ export default {
         }
       });
     },
-    showDeleteConfirmation(teamId, index) {
+
+    showDeleteConfirmation(teamId, index, name) {
       (this.teamToDeleteId = teamId), (this.teamToDeleteIndex = index);
+      this.teamToDeleteName = name;
+      console.log('hoal', name);
       this.showDeleteModal = true;
     },
 
@@ -187,15 +231,27 @@ export default {
       this.accordionItems[index].editing = true;
     },
     saveTeam(id, editedTitle, index) {
-      this.accordionItems[index].title = editedTitle;
-      this.accordionItems[index].name = editedTitle;
-      this.accordionItems[index].editing = false;
-      editTeam(id, this.accordionItems[index], this);
-      this.$emit('update-teams-array', this.accordionItems);
+      const updatedTitle = editedTitle;
+      if (updatedTitle !== '') {
+        this.accordionItems[index].title = editedTitle;
+        this.accordionItems[index].name = editedTitle;
+        this.accordionItems[index].editing = false;
+        editTeam(id, this.accordionItems[index], this);
+        this.$emit('update-teams-array', this.accordionItems);
+      }
     },
 
     changePage(page) {
+      const openStates = {};
+      this.accordionItems.forEach((item) => {
+        openStates[item.id] = item.open;
+      });
+
       this.currentPage = page;
+
+      this.accordionItems.forEach((item) => {
+        item.open = openStates[item.id];
+      });
     },
   },
 };
