@@ -127,6 +127,19 @@ frontend/
 
 The Team & Members Listing website consists of a single page with a user-friendly interface. Below can be seen the layout and functionality of the various sections:
 
+<img width="700" alt="cap1" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/6d65caa3-60fa-425c-b294-f14d3f56968e">
+<img width="700" alt="cap2" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/26b435a8-4b26-4636-b6b0-d00b26926b59">
+
+<img width="200" height="300" alt="cap3" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/5b0508ea-ca01-4c3e-9d28-0ecb46d11a28">  <img width="200" height="300" alt="cap4" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/5c6eb269-990d-4f9a-877e-2a0aa3e2fc8e">
+<img width="700" alt="cap5" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/a7e1f7b8-52cf-4ff8-9d26-4da6397d262d">
+<img width="700" alt="cap6" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/28dbbb3c-d04d-4b24-ba71-fdfe21cdfd82">
+<img width="700" alt="cap7" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/f85791f0-953b-49d2-ba37-b3ecf0d44d76">
+<img width="700" alt="cap8" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/5b9263f4-0440-4464-8892-4fe8720477ea">
+<img width="700" alt="cap9" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/7f243979-42d9-4cc4-b1ec-6325904dcd72">
+<img width="700" alt="cap10" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/a8025a4a-5fd4-4f1f-a497-55002c6defe4">
+<img width="700" alt="cap11" src="https://github.com/ArshiaSaleem98/team-members-listing/assets/45390300/6015a59b-5664-4486-b262-39f643a4d4ec">
+
+
 ### Teams & Members:
 
 ### Teams Section
